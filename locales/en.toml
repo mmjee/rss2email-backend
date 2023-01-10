@@ -1,0 +1,2 @@
+[General]
+ChallengeMessage = "Please sign these random bytes to prove your access to your address: {{ .Data }}"

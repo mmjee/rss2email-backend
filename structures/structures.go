@@ -33,3 +33,36 @@ type SeenItem struct {
 	GUID      string             `codec:"guid" bson:"guid"`
 	Timestamp time.Time          `codec:"timestamp" bson:"timestamp"`
 }
+
+// MessagePack-oriented structures
+type ErrorMessage struct {
+	_struct bool `codec:",omitempty,toarray"`
+
+	Code    ErrorCode
+	Message string
+}
+
+type InitializationRequest struct {
+	Address [20]byte `codec:"address"`
+	Locale  string   `codec:"locale"`
+}
+
+type InitializationResponse struct {
+	UserFound bool   `codec:"user_found"`
+	Challenge string `codec:"challenge"`
+}
+
+type NewUserInitialization struct {
+	Email     string   `codec:"email"`
+	Signature [64]byte `codec:"signature"`
+}
+
+type OrdinaryInitialization struct {
+	Signature [64]byte `codec:"signature"`
+}
+
+type Welcome struct {
+	LoggedIn bool   `codec:"logged_in"`
+	Message  string `codec:"message"`
+	User     User   `codec:"user"`
+}
