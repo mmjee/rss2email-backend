@@ -93,12 +93,12 @@ func (x *User) CodecEncodeSelf(e *codec1978.Encoder) {
 		_ = yy2arr2
 		const yyr2 bool = false // struct tag has 'toArray'
 		if yyr2 || yy2arr2 {
-			z.EncWriteArrayStart(5)
+			z.EncWriteArrayStart(7)
 			z.EncWriteArrayElem()
 			if z.EncBasicHandle().TimeBuiltin() {
 				r.EncodeTime(x.CreatedAt)
-			} else if yyxt8 := z.Extension(x.CreatedAt); yyxt8 != nil {
-				z.EncExtension(x.CreatedAt, yyxt8)
+			} else if yyxt10 := z.Extension(x.CreatedAt); yyxt10 != nil {
+				z.EncExtension(x.CreatedAt, yyxt10)
 			} else if z.EncBinary() {
 				z.EncBinaryMarshal(x.CreatedAt)
 			} else if !z.EncBinary() && z.IsJSONHandle() {
@@ -109,8 +109,8 @@ func (x *User) CodecEncodeSelf(e *codec1978.Encoder) {
 			z.EncWriteArrayElem()
 			if z.EncBasicHandle().TimeBuiltin() {
 				r.EncodeTime(x.UpdatedAt)
-			} else if yyxt9 := z.Extension(x.UpdatedAt); yyxt9 != nil {
-				z.EncExtension(x.UpdatedAt, yyxt9)
+			} else if yyxt11 := z.Extension(x.UpdatedAt); yyxt11 != nil {
+				z.EncExtension(x.UpdatedAt, yyxt11)
 			} else if z.EncBinary() {
 				z.EncBinaryMarshal(x.UpdatedAt)
 			} else if !z.EncBinary() && z.IsJSONHandle() {
@@ -119,72 +119,33 @@ func (x *User) CodecEncodeSelf(e *codec1978.Encoder) {
 				z.EncFallback(x.UpdatedAt)
 			}
 			z.EncWriteArrayElem()
-			yy10 := &x.ID
-			if yyxt11 := z.Extension(yy10); yyxt11 != nil {
-				z.EncExtension(yy10, yyxt11)
+			yy12 := &x.ID
+			if yyxt13 := z.Extension(yy12); yyxt13 != nil {
+				z.EncExtension(yy12, yyxt13)
 			} else if !z.EncBinary() && z.IsJSONHandle() {
-				z.EncJSONMarshal(*yy10)
+				z.EncJSONMarshal(*yy12)
 			} else {
-				z.F.EncSliceUint8V(([]uint8)(yy10[:]), e)
+				z.F.EncSliceUint8V(([]uint8)(yy12[:]), e)
 			}
 			z.EncWriteArrayElem()
-			yy12 := &x.Address
-			h.encArray20uint8((*[20]uint8)(yy12), e)
+			yy14 := &x.Address
+			h.encArray20uint8((*[20]uint8)(yy14), e)
 			z.EncWriteArrayElem()
 			r.EncodeString(string(x.Email))
+			z.EncWriteArrayElem()
+			r.EncodeBool(bool(x.EmailVerified))
+			z.EncWriteArrayElem()
+			yy18 := &x.EmailVerificationToken
+			h.encArray32uint8((*[32]uint8)(yy18), e)
 			z.EncWriteArrayEnd()
 		} else {
-			z.EncWriteMapStart(5)
+			z.EncWriteMapStart(7)
 			if z.EncBasicHandle().Canonical {
 				z.EncWriteMapElemKey()
 				r.EncodeString(`addr`)
 				z.EncWriteMapElemValue()
-				yy15 := &x.Address
-				h.encArray20uint8((*[20]uint8)(yy15), e)
-				z.EncWriteMapElemKey()
-				r.EncodeString(`created_at`)
-				z.EncWriteMapElemValue()
-				if z.EncBasicHandle().TimeBuiltin() {
-					r.EncodeTime(x.CreatedAt)
-				} else if yyxt17 := z.Extension(x.CreatedAt); yyxt17 != nil {
-					z.EncExtension(x.CreatedAt, yyxt17)
-				} else if z.EncBinary() {
-					z.EncBinaryMarshal(x.CreatedAt)
-				} else if !z.EncBinary() && z.IsJSONHandle() {
-					z.EncJSONMarshal(x.CreatedAt)
-				} else {
-					z.EncFallback(x.CreatedAt)
-				}
-				z.EncWriteMapElemKey()
-				r.EncodeString(`email`)
-				z.EncWriteMapElemValue()
-				r.EncodeString(string(x.Email))
-				z.EncWriteMapElemKey()
-				r.EncodeString(`id`)
-				z.EncWriteMapElemValue()
-				yy19 := &x.ID
-				if yyxt20 := z.Extension(yy19); yyxt20 != nil {
-					z.EncExtension(yy19, yyxt20)
-				} else if !z.EncBinary() && z.IsJSONHandle() {
-					z.EncJSONMarshal(*yy19)
-				} else {
-					z.F.EncSliceUint8V(([]uint8)(yy19[:]), e)
-				}
-				z.EncWriteMapElemKey()
-				r.EncodeString(`updated_at`)
-				z.EncWriteMapElemValue()
-				if z.EncBasicHandle().TimeBuiltin() {
-					r.EncodeTime(x.UpdatedAt)
-				} else if yyxt21 := z.Extension(x.UpdatedAt); yyxt21 != nil {
-					z.EncExtension(x.UpdatedAt, yyxt21)
-				} else if z.EncBinary() {
-					z.EncBinaryMarshal(x.UpdatedAt)
-				} else if !z.EncBinary() && z.IsJSONHandle() {
-					z.EncJSONMarshal(x.UpdatedAt)
-				} else {
-					z.EncFallback(x.UpdatedAt)
-				}
-			} else {
+				yy20 := &x.Address
+				h.encArray20uint8((*[20]uint8)(yy20), e)
 				z.EncWriteMapElemKey()
 				r.EncodeString(`created_at`)
 				z.EncWriteMapElemValue()
@@ -200,12 +161,65 @@ func (x *User) CodecEncodeSelf(e *codec1978.Encoder) {
 					z.EncFallback(x.CreatedAt)
 				}
 				z.EncWriteMapElemKey()
+				r.EncodeString(`email`)
+				z.EncWriteMapElemValue()
+				r.EncodeString(string(x.Email))
+				z.EncWriteMapElemKey()
+				r.EncodeString(`email_verification_token`)
+				z.EncWriteMapElemValue()
+				yy24 := &x.EmailVerificationToken
+				h.encArray32uint8((*[32]uint8)(yy24), e)
+				z.EncWriteMapElemKey()
+				r.EncodeString(`email_verified`)
+				z.EncWriteMapElemValue()
+				r.EncodeBool(bool(x.EmailVerified))
+				z.EncWriteMapElemKey()
+				r.EncodeString(`id`)
+				z.EncWriteMapElemValue()
+				yy27 := &x.ID
+				if yyxt28 := z.Extension(yy27); yyxt28 != nil {
+					z.EncExtension(yy27, yyxt28)
+				} else if !z.EncBinary() && z.IsJSONHandle() {
+					z.EncJSONMarshal(*yy27)
+				} else {
+					z.F.EncSliceUint8V(([]uint8)(yy27[:]), e)
+				}
+				z.EncWriteMapElemKey()
 				r.EncodeString(`updated_at`)
 				z.EncWriteMapElemValue()
 				if z.EncBasicHandle().TimeBuiltin() {
 					r.EncodeTime(x.UpdatedAt)
-				} else if yyxt23 := z.Extension(x.UpdatedAt); yyxt23 != nil {
-					z.EncExtension(x.UpdatedAt, yyxt23)
+				} else if yyxt29 := z.Extension(x.UpdatedAt); yyxt29 != nil {
+					z.EncExtension(x.UpdatedAt, yyxt29)
+				} else if z.EncBinary() {
+					z.EncBinaryMarshal(x.UpdatedAt)
+				} else if !z.EncBinary() && z.IsJSONHandle() {
+					z.EncJSONMarshal(x.UpdatedAt)
+				} else {
+					z.EncFallback(x.UpdatedAt)
+				}
+			} else {
+				z.EncWriteMapElemKey()
+				r.EncodeString(`created_at`)
+				z.EncWriteMapElemValue()
+				if z.EncBasicHandle().TimeBuiltin() {
+					r.EncodeTime(x.CreatedAt)
+				} else if yyxt30 := z.Extension(x.CreatedAt); yyxt30 != nil {
+					z.EncExtension(x.CreatedAt, yyxt30)
+				} else if z.EncBinary() {
+					z.EncBinaryMarshal(x.CreatedAt)
+				} else if !z.EncBinary() && z.IsJSONHandle() {
+					z.EncJSONMarshal(x.CreatedAt)
+				} else {
+					z.EncFallback(x.CreatedAt)
+				}
+				z.EncWriteMapElemKey()
+				r.EncodeString(`updated_at`)
+				z.EncWriteMapElemValue()
+				if z.EncBasicHandle().TimeBuiltin() {
+					r.EncodeTime(x.UpdatedAt)
+				} else if yyxt31 := z.Extension(x.UpdatedAt); yyxt31 != nil {
+					z.EncExtension(x.UpdatedAt, yyxt31)
 				} else if z.EncBinary() {
 					z.EncBinaryMarshal(x.UpdatedAt)
 				} else if !z.EncBinary() && z.IsJSONHandle() {
@@ -216,23 +230,32 @@ func (x *User) CodecEncodeSelf(e *codec1978.Encoder) {
 				z.EncWriteMapElemKey()
 				r.EncodeString(`id`)
 				z.EncWriteMapElemValue()
-				yy24 := &x.ID
-				if yyxt25 := z.Extension(yy24); yyxt25 != nil {
-					z.EncExtension(yy24, yyxt25)
+				yy32 := &x.ID
+				if yyxt33 := z.Extension(yy32); yyxt33 != nil {
+					z.EncExtension(yy32, yyxt33)
 				} else if !z.EncBinary() && z.IsJSONHandle() {
-					z.EncJSONMarshal(*yy24)
+					z.EncJSONMarshal(*yy32)
 				} else {
-					z.F.EncSliceUint8V(([]uint8)(yy24[:]), e)
+					z.F.EncSliceUint8V(([]uint8)(yy32[:]), e)
 				}
 				z.EncWriteMapElemKey()
 				r.EncodeString(`addr`)
 				z.EncWriteMapElemValue()
-				yy26 := &x.Address
-				h.encArray20uint8((*[20]uint8)(yy26), e)
+				yy34 := &x.Address
+				h.encArray20uint8((*[20]uint8)(yy34), e)
 				z.EncWriteMapElemKey()
 				r.EncodeString(`email`)
 				z.EncWriteMapElemValue()
 				r.EncodeString(string(x.Email))
+				z.EncWriteMapElemKey()
+				r.EncodeString(`email_verified`)
+				z.EncWriteMapElemValue()
+				r.EncodeBool(bool(x.EmailVerified))
+				z.EncWriteMapElemKey()
+				r.EncodeString(`email_verification_token`)
+				z.EncWriteMapElemValue()
+				yy38 := &x.EmailVerificationToken
+				h.encArray32uint8((*[32]uint8)(yy38), e)
 			}
 			z.EncWriteMapEnd()
 		}
@@ -319,6 +342,10 @@ func (x *User) codecDecodeSelfFromMap(l int, d *codec1978.Decoder) {
 			h.decArray20uint8((*[20]uint8)(&x.Address), d)
 		case "email":
 			x.Email = (string)(z.DecStringZC(r.DecodeStringAsBytes()))
+		case "email_verified":
+			x.EmailVerified = (bool)(r.DecodeBool())
+		case "email_verification_token":
+			h.decArray32uint8((*[32]uint8)(&x.EmailVerificationToken), d)
 		default:
 			z.DecStructFieldNotFound(-1, string(yys3))
 		} // end switch yys3
@@ -329,24 +356,24 @@ func (x *User) codecDecodeSelfFromArray(l int, d *codec1978.Decoder) {
 	var h codecSelfer42
 	z, r := codec1978.GenHelper().Decoder(d)
 	_, _, _ = h, z, r
-	var yyj13 int
-	var yyb13 bool
-	var yyhl13 bool = l >= 0
-	yyj13++
-	if yyhl13 {
-		yyb13 = yyj13 > l
+	var yyj16 int
+	var yyb16 bool
+	var yyhl16 bool = l >= 0
+	yyj16++
+	if yyhl16 {
+		yyb16 = yyj16 > l
 	} else {
-		yyb13 = z.DecCheckBreak()
+		yyb16 = z.DecCheckBreak()
 	}
-	if yyb13 {
+	if yyb16 {
 		z.DecReadArrayEnd()
 		return
 	}
 	z.DecReadArrayElem()
 	if z.DecBasicHandle().TimeBuiltin() {
 		x.CreatedAt = r.DecodeTime()
-	} else if yyxt15 := z.Extension(x.CreatedAt); yyxt15 != nil {
-		z.DecExtension(&x.CreatedAt, yyxt15)
+	} else if yyxt18 := z.Extension(x.CreatedAt); yyxt18 != nil {
+		z.DecExtension(&x.CreatedAt, yyxt18)
 	} else if z.DecBinary() {
 		z.DecBinaryUnmarshal(&x.CreatedAt)
 	} else if !z.DecBinary() && z.IsJSONHandle() {
@@ -354,21 +381,21 @@ func (x *User) codecDecodeSelfFromArray(l int, d *codec1978.Decoder) {
 	} else {
 		z.DecFallback(&x.CreatedAt, false)
 	}
-	yyj13++
-	if yyhl13 {
-		yyb13 = yyj13 > l
+	yyj16++
+	if yyhl16 {
+		yyb16 = yyj16 > l
 	} else {
-		yyb13 = z.DecCheckBreak()
+		yyb16 = z.DecCheckBreak()
 	}
-	if yyb13 {
+	if yyb16 {
 		z.DecReadArrayEnd()
 		return
 	}
 	z.DecReadArrayElem()
 	if z.DecBasicHandle().TimeBuiltin() {
 		x.UpdatedAt = r.DecodeTime()
-	} else if yyxt17 := z.Extension(x.UpdatedAt); yyxt17 != nil {
-		z.DecExtension(&x.UpdatedAt, yyxt17)
+	} else if yyxt20 := z.Extension(x.UpdatedAt); yyxt20 != nil {
+		z.DecExtension(&x.UpdatedAt, yyxt20)
 	} else if z.DecBinary() {
 		z.DecBinaryUnmarshal(&x.UpdatedAt)
 	} else if !z.DecBinary() && z.IsJSONHandle() {
@@ -376,65 +403,89 @@ func (x *User) codecDecodeSelfFromArray(l int, d *codec1978.Decoder) {
 	} else {
 		z.DecFallback(&x.UpdatedAt, false)
 	}
-	yyj13++
-	if yyhl13 {
-		yyb13 = yyj13 > l
+	yyj16++
+	if yyhl16 {
+		yyb16 = yyj16 > l
 	} else {
-		yyb13 = z.DecCheckBreak()
+		yyb16 = z.DecCheckBreak()
 	}
-	if yyb13 {
+	if yyb16 {
 		z.DecReadArrayEnd()
 		return
 	}
 	z.DecReadArrayElem()
-	if yyxt19 := z.Extension(x.ID); yyxt19 != nil {
-		z.DecExtension(&x.ID, yyxt19)
+	if yyxt22 := z.Extension(x.ID); yyxt22 != nil {
+		z.DecExtension(&x.ID, yyxt22)
 	} else if !z.DecBinary() && z.IsJSONHandle() {
 		z.DecJSONUnmarshal(&x.ID)
 	} else {
 		z.F.DecSliceUint8N(([]uint8)(x.ID[:]), d)
 	}
-	yyj13++
-	if yyhl13 {
-		yyb13 = yyj13 > l
+	yyj16++
+	if yyhl16 {
+		yyb16 = yyj16 > l
 	} else {
-		yyb13 = z.DecCheckBreak()
+		yyb16 = z.DecCheckBreak()
 	}
-	if yyb13 {
+	if yyb16 {
 		z.DecReadArrayEnd()
 		return
 	}
 	z.DecReadArrayElem()
 	h.decArray20uint8((*[20]uint8)(&x.Address), d)
-	yyj13++
-	if yyhl13 {
-		yyb13 = yyj13 > l
+	yyj16++
+	if yyhl16 {
+		yyb16 = yyj16 > l
 	} else {
-		yyb13 = z.DecCheckBreak()
+		yyb16 = z.DecCheckBreak()
 	}
-	if yyb13 {
+	if yyb16 {
 		z.DecReadArrayEnd()
 		return
 	}
 	z.DecReadArrayElem()
 	x.Email = (string)(z.DecStringZC(r.DecodeStringAsBytes()))
+	yyj16++
+	if yyhl16 {
+		yyb16 = yyj16 > l
+	} else {
+		yyb16 = z.DecCheckBreak()
+	}
+	if yyb16 {
+		z.DecReadArrayEnd()
+		return
+	}
+	z.DecReadArrayElem()
+	x.EmailVerified = (bool)(r.DecodeBool())
+	yyj16++
+	if yyhl16 {
+		yyb16 = yyj16 > l
+	} else {
+		yyb16 = z.DecCheckBreak()
+	}
+	if yyb16 {
+		z.DecReadArrayEnd()
+		return
+	}
+	z.DecReadArrayElem()
+	h.decArray32uint8((*[32]uint8)(&x.EmailVerificationToken), d)
 	for {
-		yyj13++
-		if yyhl13 {
-			yyb13 = yyj13 > l
+		yyj16++
+		if yyhl16 {
+			yyb16 = yyj16 > l
 		} else {
-			yyb13 = z.DecCheckBreak()
+			yyb16 = z.DecCheckBreak()
 		}
-		if yyb13 {
+		if yyb16 {
 			break
 		}
 		z.DecReadArrayElem()
-		z.DecStructFieldNotFound(yyj13-1, "")
+		z.DecStructFieldNotFound(yyj16-1, "")
 	}
 }
 
 func (x *User) IsCodecEmpty() bool {
-	return !(!(x.CreatedAt.IsZero()) || !(x.UpdatedAt.IsZero()) || x.ID != pkg1_primitive.ObjectID{} || x.Address != [20]uint8{} || x.Email != "" || false)
+	return !(!(x.CreatedAt.IsZero()) || !(x.UpdatedAt.IsZero()) || x.ID != pkg1_primitive.ObjectID{} || x.Address != [20]uint8{} || x.Email != "" || bool(x.EmailVerified) || x.EmailVerificationToken != [32]uint8{} || false)
 }
 
 func (Feed) codecSelferViaCodecgen() {}
@@ -1277,4 +1328,22 @@ func (x codecSelfer42) decArray20uint8(v *[20]uint8, d *codec1978.Decoder) {
 	z, r := codec1978.GenHelper().Decoder(d)
 	_, _, _ = h, z, r
 	r.DecodeBytes(((*[20]byte)(v))[:])
+}
+
+func (x codecSelfer42) encArray32uint8(v *[32]uint8, e *codec1978.Encoder) {
+	var h codecSelfer42
+	z, r := codec1978.GenHelper().Encoder(e)
+	_, _, _ = h, z, r
+	if v == nil {
+		r.EncodeNil()
+		return
+	}
+	r.EncodeStringBytesRaw(((*[32]byte)(v))[:])
+}
+
+func (x codecSelfer42) decArray32uint8(v *[32]uint8, d *codec1978.Decoder) {
+	var h codecSelfer42
+	z, r := codec1978.GenHelper().Decoder(d)
+	_, _, _ = h, z, r
+	r.DecodeBytes(((*[32]byte)(v))[:])
 }

@@ -8,11 +8,13 @@ import (
 )
 
 type User struct {
-	CreatedAt time.Time          `codec:"created_at" bson:"created_at"`
-	UpdatedAt time.Time          `codec:"updated_at" bson:"updated_at"`
-	ID        primitive.ObjectID `codec:"id" bson:"_id"`
-	Address   [20]byte           `codec:"addr" bson:"addr"`
-	Email     string             `codec:"email" bson:"email"`
+	CreatedAt              time.Time          `codec:"created_at" bson:"created_at"`
+	UpdatedAt              time.Time          `codec:"updated_at" bson:"updated_at"`
+	ID                     primitive.ObjectID `codec:"id" bson:"_id"`
+	Address                [20]byte           `codec:"addr" bson:"addr"`
+	Email                  string             `codec:"email" bson:"email"`
+	EmailVerified          bool               `codec:"email_verified" bson:"email_verified"`
+	EmailVerificationToken [32]byte           `codec:"email_verification_token" bson:"email_verification_token"`
 }
 
 type Feed struct {
