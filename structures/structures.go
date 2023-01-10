@@ -1,4 +1,4 @@
-//go:generate codecgen -o structures.generated.go -j=false -d=42 structures.go
+//go:generate codecgen -o structures.generated.go -j=false -d=42 structures.go request_types.go
 package structures
 
 import (
@@ -49,16 +49,16 @@ type InitializationRequest struct {
 
 type InitializationResponse struct {
 	UserFound bool   `codec:"user_found"`
-	Challenge string `codec:"challenge"`
+	Challenge []byte `codec:"challenge"`
 }
 
 type NewUserInitialization struct {
 	Email     string   `codec:"email"`
-	Signature [64]byte `codec:"signature"`
+	Signature [65]byte `codec:"signature"`
 }
 
 type OrdinaryInitialization struct {
-	Signature [64]byte `codec:"signature"`
+	Signature [65]byte `codec:"signature"`
 }
 
 type Welcome struct {

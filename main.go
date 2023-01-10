@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"embed"
+	"log"
 	"net/http"
 	"os"
 
@@ -72,17 +73,19 @@ func main() {
 		msgpHandle := new(codec.MsgpackHandle)
 		msgpHandle.WriterBufferSize = 8192
 		msgpHandle.ReaderBufferSize = 8192
+		msgpHandle.WriteExt = true
 		a.codecHandle = msgpHandle
 	}
 
 	{
 		bundle := i18n.NewBundle(language.BritishEnglish)
 		bundle.RegisterUnmarshalFunc("toml", toml.Unmarshal)
-		_, _ = bundle.LoadMessageFileFS(localeFS, "translations/en.toml")
-		_, _ = bundle.LoadMessageFileFS(localeFS, "translations/bn.toml")
+		_, _ = bundle.LoadMessageFileFS(localeFS, "locales/en.toml")
+		_, _ = bundle.LoadMessageFileFS(localeFS, "locales/bn.toml")
 		a.i18nBundle = bundle
 	}
 
+	log.Println("All initialized, listening.")
 	http.HandleFunc("/", a.handler)
 	http.ListenAndServe(a.config.ListenAddr, nil)
 }

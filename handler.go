@@ -48,6 +48,7 @@ func (c *connection) loop() {
 			return
 		}
 
+		c.addr = ir.Address
 		c.localizer = i18n.NewLocalizer(c.a.i18nBundle, ir.Locale)
 
 		randBuf := make([]byte, 32)
@@ -57,12 +58,12 @@ func (c *connection) loop() {
 			return
 		}
 
-		siweMessage := c.localizer.MustLocalize(&i18n.LocalizeConfig{
+		siweMessage := []byte(c.localizer.MustLocalize(&i18n.LocalizeConfig{
 			MessageID: "General.ChallengeMessage",
 			TemplateData: map[string]string{
 				"Data": base64.StdEncoding.EncodeToString(randBuf),
 			},
-		})
+		}))
 
 		var user structures.User
 		err = c.a.users.FindOne(context.TODO(), map[string][20]byte{
@@ -81,9 +82,16 @@ func (c *connection) loop() {
 				return
 			}
 
-			ok, err = sigverify.VerifyEllipticCurveSignature(c.addr, []byte(siweMessage), userCreationReq.Signature[:])
+			ok, err = sigverify.VerifyEllipticCurveSignature(c.addr, siweMessage, userCreationReq.Signature[:])
 			if !ok {
-				c.writeError(mi, structures.ErrorInvalidSignature, err)
+				if err != nil {
+					c.writeError(mi, structures.ErrorInvalidSignature, err)
+				} else {
+					c.writeMessage(false, mi, structures.ErrorMessage{
+						Code:    structures.ErrorInvalidSignature,
+						Message: "Signature verification failed",
+					})
+				}
 				return
 			}
 
@@ -91,9 +99,10 @@ func (c *connection) loop() {
 			user.CreatedAt = time.Now()
 			user.UpdatedAt = time.Now()
 			user.Email = userCreationReq.Email
+			user.Address = c.addr
 
 			verificationToken := make([]byte, 32)
-			_, err := io.ReadFull(rand.Reader, randBuf)
+			_, err := io.ReadFull(rand.Reader, verificationToken)
 			if err != nil {
 				c.writeError(mi, structures.ErrorInternal, err)
 				return
@@ -127,28 +136,30 @@ func (c *connection) loop() {
 		}
 
 		c.writeMessage(true, mi, structures.Welcome{
-			Message: "Welcome!",
+			Message:  "Welcome!",
 			LoggedIn: true,
 			User: structures.User{
-				CreatedAt:              user.CreatedAt,
-				UpdatedAt:             	user.UpdatedAt,
-				ID:                     user.ID,
-				Address:                user.Address,
-				Email:                  user.Email,
-				EmailVerified:          user.EmailVerified,
+				CreatedAt:     user.CreatedAt,
+				UpdatedAt:     user.UpdatedAt,
+				ID:            user.ID,
+				Address:       user.Address,
+				Email:         user.Email,
+				EmailVerified: user.EmailVerified,
 			},
 		})
 	}
 
 	for {
-		mi, rdr, ok := c.readMessageInfo()
+		mi, buf, ok := c.readMessageInfo()
 		if !ok {
 			return
 		}
 
 		switch mi.RequestID {
-			case structures.RequestAddFeed:
-				go c.handleAddFeed(mi, rdr)
+		case structures.RequestListFeeds:
+			go c.handleListFeeds(mi, buf)
+		case structures.RequestAddFeed:
+			go c.handleAddFeed(mi, buf)
 		}
 	}
 }

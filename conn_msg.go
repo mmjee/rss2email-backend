@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/binary"
 	"io"
+	"log"
 
 	"git.maharshi.ninja/root/rss2email/structures"
 	"github.com/ugorji/go/codec"
@@ -16,11 +17,11 @@ type MessageInfo struct {
 }
 
 func (c *connection) readMessage(inf interface{}) (*MessageInfo, bool) {
-	mi, rdr, ok := c.readMessageInfo()
+	mi, buf, ok := c.readMessageInfo()
 	if !ok {
 		return nil, false
 	}
-	ok = c.readInterface(rdr, inf)
+	ok = c.decodeToInterface(buf, inf)
 	if !ok {
 		return nil, false
 	}
@@ -28,7 +29,7 @@ func (c *connection) readMessage(inf interface{}) (*MessageInfo, bool) {
 	return mi, true
 }
 
-func (c *connection) readMessageInfo() (*MessageInfo, io.Reader, bool) {
+func (c *connection) readMessageInfo() (*MessageInfo, []byte, bool) {
 	mtype, rdr, err := c.conn.Reader(context.TODO())
 	if mtype != websocket.MessageBinary || err != nil {
 		c.writeMessage(false, nil, structures.ErrorMessage{
@@ -52,13 +53,22 @@ func (c *connection) readMessageInfo() (*MessageInfo, io.Reader, bool) {
 		mi.RequestID = binary.LittleEndian.Uint32(buf[4:8])
 	}
 
-	return mi, rdr, true
+	rest, err := io.ReadAll(rdr)
+	if err != nil {
+		c.writeMessage(false, nil, structures.ErrorMessage{
+			Code:    structures.ErrorWhileDecoding,
+			Message: err.Error(),
+		})
+	}
+
+	return mi, rest, true
 }
 
-func (c *connection) readInterface(rdr io.Reader, inf interface{}) bool {
-	d := codec.NewDecoder(rdr, c.a.codecHandle)
+func (c *connection) decodeToInterface(buf []byte, inf interface{}) bool {
+	d := codec.NewDecoderBytes(buf, c.a.codecHandle)
 	err := d.Decode(inf)
 	if err != nil {
+		log.Printf("Errored while decoding: %s\n", err.Error())
 		c.writeMessage(false, nil, structures.ErrorMessage{
 			Code:    structures.ErrorWhileDecoding,
 			Message: err.Error(),
@@ -78,6 +88,7 @@ func (c *connection) writeError(m *MessageInfo, code structures.ErrorCode, err e
 func (c *connection) writeMessage(ok bool, m *MessageInfo, data interface{}) {
 	wr, err := c.conn.Writer(context.TODO(), websocket.MessageBinary)
 	if err != nil {
+		log.Printf("Error while writing: %s\n", err.Error())
 		c.conn.Close(websocket.StatusInternalError, "???")
 		return
 	}
@@ -88,11 +99,24 @@ func (c *connection) writeMessage(ok bool, m *MessageInfo, data interface{}) {
 			binary.LittleEndian.PutUint32(buf, m.ID)
 		}
 		if ok {
-			buf[5] = 0xFF
+			buf[4] = 0xFF
 		}
-		_, _ = wr.Write(buf)
+		_, err = wr.Write(buf)
+		if err != nil {
+			log.Printf("Error while writing: %s\n", err.Error())
+			return
+		}
 	}
 
 	enc := codec.NewEncoder(wr, c.a.codecHandle)
-	_ = enc.Encode(data)
+	err = enc.Encode(data)
+	if err != nil {
+		log.Printf("Error while writing: %s\n", err.Error())
+		return
+	}
+	err = wr.Close()
+	if err != nil {
+		log.Printf("Error while writing: %s\n", err.Error())
+		return
+	}
 }
