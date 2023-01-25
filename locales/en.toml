@@ -1,2 +1,6 @@
 [General]
 ChallengeMessage = "Please sign these random bytes to prove your access to your address: {{ .Data }}"
+
+[Errors]
+InvalidSignature = "The signature you provided was incorrect"
+AccountWithSameEmail = "An email with the same e-mail already exists"

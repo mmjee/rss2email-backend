@@ -12,6 +12,7 @@ import (
 	"git.maharshi.ninja/root/rss2email/structures"
 	"github.com/nicksnyder/go-i18n/v2/i18n"
 	"github.com/storyicon/sigverify"
+	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 	"nhooyr.io/websocket"
@@ -88,10 +89,29 @@ func (c *connection) loop() {
 					c.writeError(mi, structures.ErrorInvalidSignature, err)
 				} else {
 					c.writeMessage(false, mi, structures.ErrorMessage{
-						Code:    structures.ErrorInvalidSignature,
-						Message: "Signature verification failed",
+						Code: structures.ErrorInvalidSignature,
+						Message: c.localizer.MustLocalize(&i18n.LocalizeConfig{
+							MessageID: "Errors.InvalidSignature",
+						}),
 					})
 				}
+				return
+			}
+
+			docsWithSameEmail, err := c.a.users.CountDocuments(context.TODO(), bson.M{
+				"email": userCreationReq.Email,
+			})
+			if err != nil {
+				c.writeError(mi, structures.ErrorInternal, err)
+				return
+			}
+			if docsWithSameEmail != 0 {
+				c.writeMessage(false, mi, structures.ErrorMessage{
+					Code: structures.ErrorInvalidInputs,
+					Message: c.localizer.MustLocalize(&i18n.LocalizeConfig{
+						MessageID: "Errors.AccountWithSameEmail",
+					}),
+				})
 				return
 			}
 
@@ -102,7 +122,7 @@ func (c *connection) loop() {
 			user.Address = c.addr
 
 			verificationToken := make([]byte, 32)
-			_, err := io.ReadFull(rand.Reader, verificationToken)
+			_, err = io.ReadFull(rand.Reader, verificationToken)
 			if err != nil {
 				c.writeError(mi, structures.ErrorInternal, err)
 				return
@@ -160,6 +180,15 @@ func (c *connection) loop() {
 			go c.handleListFeeds(mi, buf)
 		case structures.RequestAddFeed:
 			go c.handleAddFeed(mi, buf)
+		case structures.RequestEditFeed:
+			go c.handleEditFeed(mi, buf)
+		case structures.RequestDeleteFeed:
+			go c.handleDeleteFeed(mi, buf)
+		default:
+			c.writeMessage(false, mi, structures.ErrorMessage{
+				Code:    structures.ErrorInvalidInputs,
+				Message: "unimplemented request or invalid request",
+			})
 		}
 	}
 }

@@ -22,6 +22,7 @@ type Feed struct {
 	UpdatedAt   time.Time          `codec:"updated_at" bson:"updated_at"`
 	ID          primitive.ObjectID `codec:"id" bson:"_id"`
 	Owner       primitive.ObjectID `codec:"owner_id" bson:"owner_id"`
+	Name        string             `codec:"name" bson:"name"`
 	URL         string             `codec:"feed_url" bson:"feed_url"`
 	Frequency   time.Duration      `codec:"frequency" bson:"frequency"`
 	LastFetched time.Time          `codec:"last_fetched" bson:"last_fetched"`
