@@ -4,3 +4,14 @@ ChallengeMessage = "Please sign these random bytes to prove your access to your 
 [Errors]
 InvalidSignature = "The signature you provided was incorrect"
 AccountWithSameEmail = "An email with the same e-mail already exists"
+AlreadyVerified = "Your email has already been verified, ignoring the request."
+InvalidVerificationToken = "Invalid token passed, sorry."
+
+[Emails]
+VerificationSubject = "RSS2Email Verification"
+Verification = """
+Hello, please go to {{ .BaseURL }}/verify/email?code={{ .Code }} to verify your email. Ignore if you didn't request this, I aplogize for the distraction.
+
+Regards,
+RSS2Email
+"""

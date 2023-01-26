@@ -27,3 +27,7 @@ type GenericIDResponse struct {
 type UpdatedFeedResponse struct {
 	ModifiedCount uint64 `codec:"modified_count"`
 }
+
+type VerifyEmailRequest struct {
+	Token [32]byte `codec:"token"`
+}

@@ -8,11 +8,14 @@ import (
 	"os"
 
 	"github.com/BurntSushi/toml"
+	feed "github.com/mmcdole/gofeed"
 	"github.com/nicksnyder/go-i18n/v2/i18n"
 	"github.com/ugorji/go/codec"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 	"golang.org/x/text/language"
+
+	smtp "github.com/xhit/go-simple-mail/v2"
 )
 
 //go:embed locales/*.toml
@@ -23,12 +26,25 @@ type Configuration struct {
 	MongoDBName string
 
 	ListenAddr string
+	BaseURL    string
+
+	EmailConfig struct {
+		Security           smtp.Encryption
+		AuthenticationType smtp.AuthType
+		Port               uint
+		FromAddr           string
+		Hostname           string
+		Username           string
+		Password           string
+	}
 }
 
 type app struct {
 	config      *Configuration
 	codecHandle *codec.MsgpackHandle
 	i18nBundle  *i18n.Bundle
+	emailClient *smtp.SMTPServer
+	feedParser  *feed.Parser
 
 	conn      *mongo.Client
 	database  *mongo.Database
@@ -84,6 +100,29 @@ func main() {
 		_, _ = bundle.LoadMessageFileFS(localeFS, "locales/bn.toml")
 		a.i18nBundle = bundle
 	}
+
+	{
+		srv := smtp.NewSMTPClient()
+		srv.Authentication = a.config.EmailConfig.AuthenticationType
+		srv.Encryption = a.config.EmailConfig.Security
+		srv.Host = a.config.EmailConfig.Hostname
+		srv.Port = int(a.config.EmailConfig.Port)
+		srv.Username = a.config.EmailConfig.Username
+		srv.Password = a.config.EmailConfig.Password
+		a.emailClient = srv
+	}
+
+	{
+		a.feedParser = feed.NewParser()
+	}
+
+	{
+		err := a.EnsureIndexes()
+		if err != nil {
+			panic(err)
+		}
+	}
+	go a.notificationLoop()
 
 	log.Println("All initialized, listening.")
 	http.HandleFunc("/", a.handler)

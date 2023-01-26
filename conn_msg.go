@@ -87,6 +87,13 @@ func (c *connection) writeError(m *MessageInfo, code structures.ErrorCode, err e
 
 func (c *connection) writeMessage(ok bool, m *MessageInfo, data interface{}) {
 	wr, err := c.conn.Writer(context.TODO(), websocket.MessageBinary)
+	defer func() {
+		err := wr.Close()
+		if err != nil {
+			log.Printf("Error while writing: %s\n", err.Error())
+			return
+		}
+	}()
 	if err != nil {
 		log.Printf("Error while writing: %s\n", err.Error())
 		c.conn.Close(websocket.StatusInternalError, "???")
@@ -110,11 +117,6 @@ func (c *connection) writeMessage(ok bool, m *MessageInfo, data interface{}) {
 
 	enc := codec.NewEncoder(wr, c.a.codecHandle)
 	err = enc.Encode(data)
-	if err != nil {
-		log.Printf("Error while writing: %s\n", err.Error())
-		return
-	}
-	err = wr.Close()
 	if err != nil {
 		log.Printf("Error while writing: %s\n", err.Error())
 		return

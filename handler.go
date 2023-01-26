@@ -41,6 +41,17 @@ type connection struct {
 	localizer *i18n.Localizer
 }
 
+func (c *connection) getUser(mi *MessageInfo) *structures.User {
+	var u structures.User
+	err := c.a.users.FindOne(context.TODO(), bson.M{"_id": c.userID}).Decode(&u)
+	if err != nil {
+		log.Printf("Error while retrieving user object (getUser): %s\n", err.Error())
+		c.writeError(mi, structures.ErrorInternal, err)
+		return nil
+	}
+	return &u
+}
+
 func (c *connection) loop() {
 	{
 		var ir structures.InitializationRequest
@@ -135,6 +146,7 @@ func (c *connection) loop() {
 				c.writeError(mi, structures.ErrorInternal, err)
 				return
 			}
+			go c.sendVerificationEmail(&user)
 		} else {
 			c.writeMessage(true, mi, structures.InitializationResponse{
 				UserFound: true,
@@ -159,12 +171,13 @@ func (c *connection) loop() {
 			Message:  "Welcome!",
 			LoggedIn: true,
 			User: structures.User{
-				CreatedAt:     user.CreatedAt,
-				UpdatedAt:     user.UpdatedAt,
-				ID:            user.ID,
-				Address:       user.Address,
-				Email:         user.Email,
-				EmailVerified: user.EmailVerified,
+				CreatedAt:             user.CreatedAt,
+				UpdatedAt:             user.UpdatedAt,
+				ID:                    user.ID,
+				Address:               user.Address,
+				Email:                 user.Email,
+				EmailVerified:         user.EmailVerified,
+				EmailVerificationLast: user.EmailVerificationLast,
 			},
 		})
 	}
@@ -184,6 +197,8 @@ func (c *connection) loop() {
 			go c.handleEditFeed(mi, buf)
 		case structures.RequestDeleteFeed:
 			go c.handleDeleteFeed(mi, buf)
+		case structures.RequestEmailVerification:
+			go c.handleEmailVerification(mi, buf)
 		default:
 			c.writeMessage(false, mi, structures.ErrorMessage{
 				Code:    structures.ErrorInvalidInputs,

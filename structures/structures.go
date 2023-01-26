@@ -15,6 +15,7 @@ type User struct {
 	Email                  string             `codec:"email" bson:"email"`
 	EmailVerified          bool               `codec:"email_verified" bson:"email_verified"`
 	EmailVerificationToken [32]byte           `codec:"email_verification_token" bson:"email_verification_token"`
+	EmailVerificationLast  time.Time          `codec:"email_verification_last" bson:"email_verification_last"`
 }
 
 type Feed struct {
