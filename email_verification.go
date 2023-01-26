@@ -3,11 +3,11 @@ package main
 import (
 	"context"
 	"crypto/subtle"
+	"encoding/hex"
 	"log"
 	"time"
 
 	"git.maharshi.ninja/root/rss2email/structures"
-	"github.com/ethereum/go-ethereum/common/hexutil"
 	"github.com/nicksnyder/go-i18n/v2/i18n"
 	"go.mongodb.org/mongo-driver/bson"
 
@@ -68,7 +68,7 @@ func (c *connection) sendVerificationEmail(user *structures.User) {
 		MessageID: "Emails.Verification",
 		TemplateData: map[string]string{
 			"BaseURL": c.a.config.BaseURL,
-			"Code":    hexutil.Encode(user.EmailVerificationToken[:]),
+			"Code":    hex.EncodeToString(user.EmailVerificationToken[:]),
 		},
 	})
 	emailSubject := c.localizer.MustLocalize(&i18n.LocalizeConfig{

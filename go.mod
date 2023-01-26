@@ -4,7 +4,6 @@ go 1.19
 
 require (
 	github.com/BurntSushi/toml v1.2.1
-	github.com/ethereum/go-ethereum v1.10.20
 	github.com/mmcdole/gofeed v1.1.3
 	github.com/nicksnyder/go-i18n/v2 v2.2.1
 	github.com/storyicon/sigverify v1.1.0
@@ -23,6 +22,7 @@ require (
 	github.com/btcsuite/btcd/btcec/v2 v2.2.0 // indirect
 	github.com/deckarep/golang-set v1.8.0 // indirect
 	github.com/decred/dcrd/dcrec/secp256k1/v4 v4.0.1 // indirect
+	github.com/ethereum/go-ethereum v1.10.20 // indirect
 	github.com/go-ole/go-ole v1.2.1 // indirect
 	github.com/go-stack/stack v1.8.0 // indirect
 	github.com/go-test/deep v1.1.0 // indirect

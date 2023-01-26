@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"encoding/hex"
 	"log"
 	"math"
 	"strconv"
@@ -9,7 +10,6 @@ import (
 	"time"
 
 	"git.maharshi.ninja/root/rss2email/structures"
-	"github.com/ethereum/go-ethereum/common/hexutil"
 	"github.com/mmcdole/gofeed"
 	smtp "github.com/xhit/go-simple-mail/v2"
 	"go.mongodb.org/mongo-driver/bson"
@@ -125,7 +125,7 @@ func (a *app) onNotificationTick(tym time.Time) {
 			grp.Go(func() error {
 				feed, err := a.feedParser.ParseURL(feedDoc.URL)
 				if err != nil {
-					log.Printf("Couldn't fetch %s\n", hexutil.Encode(feedDoc.ID[:]))
+					log.Printf("Couldn't fetch %s\n", hex.EncodeToString(feedDoc.ID[:]))
 					return nil // doesn't need to interrupt the fetching
 				}
 
@@ -135,7 +135,7 @@ func (a *app) onNotificationTick(tym time.Time) {
 						"guid":    item.GUID,
 					})
 					if err != nil {
-						log.Printf("Tried to find %s (%s), failed with %s\n", item.GUID, hexutil.Encode(feedDoc.ID[:]), err.Error())
+						log.Printf("Tried to find %s (%s), failed with %s\n", item.GUID, hex.EncodeToString(feedDoc.ID[:]), err.Error())
 						continue
 					}
 					if exists != 0 {
@@ -143,7 +143,7 @@ func (a *app) onNotificationTick(tym time.Time) {
 					}
 					err = a.sendEmailForItem(feedDoc.Feed, &feedDoc.OwnerList[0], item)
 					if err != nil {
-						log.Printf("Failed while sending email for %s (%s), failed with %s\n", item.GUID, hexutil.Encode(feedDoc.ID[:]), err.Error())
+						log.Printf("Failed while sending email for %s (%s), failed with %s\n", item.GUID, hex.EncodeToString(feedDoc.ID[:]), err.Error())
 						continue
 					}
 					_, err = a.seenItems.InsertOne(context.TODO(), structures.SeenItem{
@@ -153,7 +153,7 @@ func (a *app) onNotificationTick(tym time.Time) {
 						Timestamp: time.Now(),
 					})
 					if err != nil {
-						log.Printf("Failed while inserting seen item for %s (%s), failed with %s\n", item.GUID, hexutil.Encode(feedDoc.ID[:]), err.Error())
+						log.Printf("Failed while inserting seen item for %s (%s), failed with %s\n", item.GUID, hex.EncodeToString(feedDoc.ID[:]), err.Error())
 						continue
 					}
 				}
@@ -165,7 +165,7 @@ func (a *app) onNotificationTick(tym time.Time) {
 				})
 
 				if err != nil {
-					log.Printf("Failed while updating last_fetched for %s, failed with %s\n", hexutil.Encode(feedDoc.ID[:]), err.Error())
+					log.Printf("Failed while updating last_fetched for %s, failed with %s\n", hex.EncodeToString(feedDoc.ID[:]), err.Error())
 
 				}
 
