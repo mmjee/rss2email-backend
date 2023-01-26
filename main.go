@@ -142,7 +142,7 @@ func main() {
 			panic(err)
 		}
 	} else {
-		err = http.ListenAndServe(a.config.ListenAddr, nil)
+		err := http.ListenAndServe(a.config.ListenAddr, nil)
 		if err != nil {
 			panic(err)
 		}
