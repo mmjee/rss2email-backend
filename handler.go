@@ -22,10 +22,11 @@ func (a *app) handler(w http.ResponseWriter, r *http.Request) {
 	c, err := websocket.Accept(w, r, &websocket.AcceptOptions{
 		InsecureSkipVerify: true,
 	})
-	defer c.Close(websocket.StatusNormalClosure, "")
 	if err != nil {
 		log.Printf("Error: %s\n", err)
+		return
 	}
+	defer c.Close(websocket.StatusNormalClosure, "")
 	conn := connection{
 		a:    a,
 		conn: c,
