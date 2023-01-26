@@ -8,6 +8,7 @@ import (
 	"os"
 
 	"github.com/BurntSushi/toml"
+	"github.com/caddyserver/certmagic"
 	feed "github.com/mmcdole/gofeed"
 	"github.com/nicksnyder/go-i18n/v2/i18n"
 	"github.com/ugorji/go/codec"
@@ -27,6 +28,12 @@ type Configuration struct {
 
 	ListenAddr string
 	BaseURL    string
+
+	LetsEncrypt struct {
+		Enable  bool
+		Email   string
+		Domains []string
+	}
 
 	EmailConfig struct {
 		Security           smtp.Encryption
@@ -126,5 +133,18 @@ func main() {
 
 	log.Println("All initialized, listening.")
 	http.HandleFunc("/", a.handler)
-	http.ListenAndServe(a.config.ListenAddr, nil)
+	if a.config.LetsEncrypt.Enable {
+		certmagic.DefaultACME.Agreed = true
+		certmagic.DefaultACME.Email = a.config.LetsEncrypt.Email
+		certmagic.DefaultACME.CA = certmagic.LetsEncryptProductionCA
+		err := certmagic.HTTPS(a.config.LetsEncrypt.Domains, http.DefaultServeMux)
+		if err != nil {
+			panic(err)
+		}
+	} else {
+		err = http.ListenAndServe(a.config.ListenAddr, nil)
+		if err != nil {
+			panic(err)
+		}
+	}
 }

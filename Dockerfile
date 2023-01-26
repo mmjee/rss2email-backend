@@ -7,7 +7,7 @@ COPY go.mod go.sum ./
 RUN go mod download && go mod verify
 
 COPY . .
-RUN go build -ldflags "-s -w"  -o /usr/bin/app ./...
+RUN go build -ldflags "-s -w"  -o /usr/bin/app .
 
 FROM debian:latest
 
