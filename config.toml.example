@@ -1,0 +1,18 @@
+MongoURL = "mongodb://localhost"
+MongoDBName = "rss2email"
+ListenAddr = ":8000"
+// The principal front-end URL
+BaseURL = "http://localhost:8080"
+NotifyOldItems = false
+
+[EmailConfig]
+// 0 -> PLAIN, 1 -> LOGIN, 2 -> CRAM-MD5, 3 -> No Authentication
+AuthenticationType = 0
+// 0 -> No Authentication, 3 -> SSL/TLS wrapper, 4 -> STARTTLS
+Security = 3
+// Usually 465 if Security = 3
+Port = 10465
+FromAddr = "rss2email@system.com"
+Hostname = "mail.system.com"
+Username = "rss2email@system.com"
+Password = "p4ssw0rd"
