@@ -26,8 +26,9 @@ type Configuration struct {
 	MongoURL    string
 	MongoDBName string
 
-	ListenAddr string
-	BaseURL    string
+	ListenAddr     string
+	BaseURL        string
+	NotifyOldItems bool
 
 	LetsEncrypt struct {
 		Enable  bool

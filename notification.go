@@ -26,7 +26,7 @@ var (
 
 type FeedWithUser struct {
 	*structures.Feed `bson:",inline"`
-	OwnerList        []structures.User `bson:"owner_list"`
+	OwnerList        []*structures.User `bson:"owner_list"`
 }
 
 func (a *app) sendEmailForItem(feed *structures.Feed, user *structures.User, item *gofeed.Item) error {
@@ -116,9 +116,19 @@ func (a *app) onNotificationTick(tym time.Time) {
 
 		for _, _feedDoc := range feedList {
 			feedDoc := _feedDoc
+
+			if len(feedDoc.OwnerList) == 0 {
+				log.Printf("WARNING! Orphaned feed: %s\n", hex.EncodeToString(feedDoc.ID[:]))
+				continue
+			}
+
 			diff := time.Duration(timeUnix) % feedDoc.Frequency
 			// If diff is greater than tickerTime or less than -tickerTime, skip because it's not relevant
 			if diff >= tickerTime || diff <= -tickerTime {
+				continue
+			}
+
+			if !feedDoc.OwnerList[0].EmailVerified {
 				continue
 			}
 
@@ -130,6 +140,11 @@ func (a *app) onNotificationTick(tym time.Time) {
 				}
 
 				for _, item := range feed.Items {
+					// Do NOT report items created before the feed creation unless NotifyOldItems is set to true
+					if item.PublishedParsed.After(feedDoc.CreatedAt) && a.config.NotifyOldItems == false {
+						continue
+					}
+
 					exists, err := a.seenItems.CountDocuments(context.TODO(), bson.M{
 						"feed_id": feedDoc.ID,
 						"guid":    item.GUID,
@@ -141,7 +156,7 @@ func (a *app) onNotificationTick(tym time.Time) {
 					if exists != 0 {
 						continue
 					}
-					err = a.sendEmailForItem(feedDoc.Feed, &feedDoc.OwnerList[0], item)
+					err = a.sendEmailForItem(feedDoc.Feed, feedDoc.OwnerList[0], item)
 					if err != nil {
 						log.Printf("Failed while sending email for %s (%s), failed with %s\n", item.GUID, hex.EncodeToString(feedDoc.ID[:]), err.Error())
 						continue
