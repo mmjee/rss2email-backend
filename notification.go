@@ -141,7 +141,7 @@ func (a *app) onNotificationTick(tym time.Time) {
 
 				for _, item := range feed.Items {
 					// Do NOT report items created before the feed creation unless NotifyOldItems is set to true
-					if item.PublishedParsed.After(feedDoc.CreatedAt) && a.config.NotifyOldItems == false {
+					if feedDoc.CreatedAt.After(*item.PublishedParsed) && a.config.NotifyOldItems == false {
 						continue
 					}
 
