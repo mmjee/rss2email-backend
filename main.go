@@ -102,7 +102,7 @@ func main() {
 	}
 
 	{
-		bundle := i18n.NewBundle(language.BritishEnglish)
+		bundle := i18n.NewBundle(language.English)
 		bundle.RegisterUnmarshalFunc("toml", toml.Unmarshal)
 		_, _ = bundle.LoadMessageFileFS(localeFS, "locales/en.toml")
 		_, _ = bundle.LoadMessageFileFS(localeFS, "locales/bn.toml")

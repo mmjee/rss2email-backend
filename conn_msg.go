@@ -59,6 +59,7 @@ func (c *connection) readMessageInfo() (*MessageInfo, []byte, bool) {
 			Code:    structures.ErrorWhileDecoding,
 			Message: err.Error(),
 		})
+		return nil, nil, false
 	}
 
 	return mi, rest, true
