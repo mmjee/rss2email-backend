@@ -5,11 +5,13 @@ import (
 	"crypto/subtle"
 	"encoding/hex"
 	"log"
+	"strings"
 	"time"
 
 	"git.maharshi.ninja/root/rss2email/structures"
 	"github.com/nicksnyder/go-i18n/v2/i18n"
 	"go.mongodb.org/mongo-driver/bson"
+	"golang.org/x/net/idna"
 
 	smtp "github.com/xhit/go-simple-mail/v2"
 )
@@ -78,8 +80,22 @@ func (c *connection) sendVerificationEmail(user *structures.User) {
 	msg := smtp.NewMSG()
 	msg.SetFrom(c.a.config.EmailConfig.FromAddr)
 	msg.SetSubject(emailSubject)
-	msg.AddTo(user.Email)
 	msg.SetBody(smtp.TextPlain, emailContent)
+
+	{
+		eParts := strings.Split(user.Email, "@")
+		if (len(eParts) != 2) {
+			log.Printf("Ignoring invalid e-mail address, User Id: %#v\n", user.ID)
+			return
+		}
+		x, err := idna.Punycode.ToASCII(eParts[1])
+		if err != nil {
+			log.Printf("Caught error converting from Unicode to Punycode: %s\n", err.Error())
+			return
+		}
+		eParts[1] = x
+		msg.AddTo(strings.Join(eParts, "@"))
+	}
 
 	conn, err := c.a.emailClient.Connect()
 	if err != nil {
