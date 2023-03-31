@@ -1,4 +1,4 @@
-FROM golang:1.19 AS build
+FROM golang:1.20 AS build
 
 WORKDIR /usr/src/app
 
@@ -7,7 +7,7 @@ COPY go.mod go.sum ./
 RUN go mod download && go mod verify
 
 COPY . .
-RUN go build -ldflags "-s -w"  -o /usr/bin/app .
+RUN go build -ldflags "-s -w" -trimpath -v  -o /usr/bin/app .
 
 FROM debian:latest
 
