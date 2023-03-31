@@ -200,6 +200,8 @@ func (c *connection) loop() {
 			go c.handleDeleteFeed(mi, buf)
 		case structures.RequestEmailVerification:
 			go c.handleEmailVerification(mi, buf)
+		case structures.RequestEmailAgain:
+			go c.handleEmailRequest(mi, buf)
 		default:
 			c.writeMessage(false, mi, structures.ErrorMessage{
 				Code:    structures.ErrorInvalidInputs,

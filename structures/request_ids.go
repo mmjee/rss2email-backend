@@ -7,4 +7,5 @@ const (
 	RequestRemoveFeed        = 0x0013
 	RequestDeleteFeed        = 0x0014
 	RequestEmailVerification = 0x0020
+	RequestEmailAgain        = 0x0021
 )

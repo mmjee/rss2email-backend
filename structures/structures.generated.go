@@ -7,12 +7,13 @@ package structures
 
 import (
 	"errors"
-	codec1978 "github.com/ugorji/go/codec"
-	pkg1_primitive "go.mongodb.org/mongo-driver/bson/primitive"
 	"runtime"
 	"sort"
 	"strconv"
 	"time"
+
+	codec1978 "github.com/ugorji/go/codec"
+	pkg1_primitive "go.mongodb.org/mongo-driver/bson/primitive"
 )
 
 const (

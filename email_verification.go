@@ -60,6 +60,12 @@ func (c *connection) handleEmailVerification(mi *MessageInfo, buf []byte) {
 	})
 }
 
+func (c *connection) handleEmailRequest(mi *MessageInfo, buf []byte) {
+	u := c.getUser(mi)
+	c.sendVerificationEmail(u)
+	c.writeMessage(true, mi, true)
+}
+
 func (c *connection) sendVerificationEmail(user *structures.User) {
 	if time.Since(user.EmailVerificationLast) <= 6*time.Hour {
 		log.Printf("Ignoring email verification request since it was sent within the past 6 hours. User ID: %#v\n", user.ID)
@@ -84,7 +90,7 @@ func (c *connection) sendVerificationEmail(user *structures.User) {
 
 	{
 		eParts := strings.Split(user.Email, "@")
-		if (len(eParts) != 2) {
+		if len(eParts) != 2 {
 			log.Printf("Ignoring invalid e-mail address, User Id: %#v\n", user.ID)
 			return
 		}
