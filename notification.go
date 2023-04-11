@@ -58,7 +58,10 @@ func (a *app) sendEmailForItem(feed *structures.Feed, user *structures.User, ite
 	msg := smtp.NewMSG()
 	msg.SetFrom(a.config.EmailConfig.FromAddr)
 	msg.SetSubject(subject)
-	msg.AddTo(user.Email)
+	err := setEmailToAddress(msg, user.Email)
+	if err != nil {
+		return err
+	}
 	msg.SetBody(smtp.TextPlain, body)
 
 	conn, err := a.emailClient.Connect()

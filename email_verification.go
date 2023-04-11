@@ -12,6 +12,7 @@ import (
 	"github.com/nicksnyder/go-i18n/v2/i18n"
 	"go.mongodb.org/mongo-driver/bson"
 	"golang.org/x/net/idna"
+	"golang.org/x/xerrors"
 
 	smtp "github.com/xhit/go-simple-mail/v2"
 )
@@ -60,6 +61,22 @@ func (c *connection) handleEmailVerification(mi *MessageInfo, buf []byte) {
 	})
 }
 
+func setEmailToAddress(msg *smtp.Email, address string) error {
+	eParts := strings.Split(address, "@")
+	if len(eParts) != 2 {
+		log.Printf("Ignoring invalid e-mail address, address: %#v\n", address)
+		return xerrors.New("invalid e-mail address")
+	}
+	x, err := idna.Punycode.ToASCII(eParts[1])
+	if err != nil {
+		log.Printf("Caught error converting from Unicode to Punycode: %s\n", err.Error())
+		return xerrors.New("incovertible to Punycode")
+	}
+	eParts[1] = x
+	msg.AddTo(strings.Join(eParts, "@"))
+	return nil
+}
+
 func (c *connection) handleEmailRequest(mi *MessageInfo, buf []byte) {
 	u := c.getUser(mi)
 	c.sendVerificationEmail(u)
@@ -87,20 +104,10 @@ func (c *connection) sendVerificationEmail(user *structures.User) {
 	msg.SetFrom(c.a.config.EmailConfig.FromAddr)
 	msg.SetSubject(emailSubject)
 	msg.SetBody(smtp.TextPlain, emailContent)
-
-	{
-		eParts := strings.Split(user.Email, "@")
-		if len(eParts) != 2 {
-			log.Printf("Ignoring invalid e-mail address, User Id: %#v\n", user.ID)
-			return
-		}
-		x, err := idna.Punycode.ToASCII(eParts[1])
-		if err != nil {
-			log.Printf("Caught error converting from Unicode to Punycode: %s\n", err.Error())
-			return
-		}
-		eParts[1] = x
-		msg.AddTo(strings.Join(eParts, "@"))
+	err := setEmailToAddress(msg, user.Email)
+	// Above is guaranteed to print, so it's not necessary to log again.
+	if err != nil {
+		return
 	}
 
 	conn, err := c.a.emailClient.Connect()

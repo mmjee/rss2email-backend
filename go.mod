@@ -14,6 +14,7 @@ require (
 	golang.org/x/net v0.0.0-20220805013720-a33c5aa5df48
 	golang.org/x/sync v0.0.0-20220722155255-886fb9371eb4
 	golang.org/x/text v0.4.0
+	golang.org/x/xerrors v0.0.0-20220517211312-f3a8303e98df
 	nhooyr.io/websocket v1.8.7
 )
 
