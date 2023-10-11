@@ -55,7 +55,7 @@ func (c *connection) handleEditFeed(mi *MessageInfo, buf []byte) {
 	}, bson.M{
 		"$set": bson.M{
 			"name":      req.Name,
-			"url":       req.URL,
+			"feed_url":  req.URL,
 			"frequency": req.Frequency,
 		},
 	})

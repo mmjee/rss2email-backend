@@ -67,10 +67,10 @@ func (p codecSelfer42float64Slice) Swap(i, j int)      { p[uint(i)], p[uint(j)] 
 func (p codecSelfer42float64Slice) Less(i, j int) bool { return p[uint(i)] < p[uint(j)] }
 
 func init() {
-	if codec1978.GenVersion != 25 {
+	if codec1978.GenVersion != 28 {
 		_, file, _, _ := runtime.Caller(0)
 		ver := strconv.FormatInt(int64(codec1978.GenVersion), 10)
-		panic(errors.New("codecgen version mismatch: current: 25, need " + ver + ". Re-generate file: " + file))
+		panic(errors.New("codecgen version mismatch: current: 28, need " + ver + ". Re-generate file: " + file))
 	}
 	if false { // reference the types, but skip this branch at build/run time
 		var _ pkg1_primitive.ObjectID
@@ -333,16 +333,7 @@ func (x *User) codecDecodeSelfFromMap(l int, d *codec1978.Decoder) {
 	z, r := codec1978.GenHelper().Decoder(d)
 	_, _, _ = h, z, r
 	var yyhl3 bool = l >= 0
-	for yyj3 := 0; ; yyj3++ {
-		if yyhl3 {
-			if yyj3 >= l {
-				break
-			}
-		} else {
-			if z.DecCheckBreak() {
-				break
-			}
-		}
+	for yyj3 := 0; z.DecContainerNext(yyj3, l, yyhl3); yyj3++ {
 		z.DecReadMapElemKey()
 		yys3 := r.DecodeStringAsBytes()
 		z.DecReadMapElemValue()
@@ -412,12 +403,7 @@ func (x *User) codecDecodeSelfFromArray(l int, d *codec1978.Decoder) {
 	var yyj18 int
 	var yyb18 bool
 	var yyhl18 bool = l >= 0
-	yyj18++
-	if yyhl18 {
-		yyb18 = yyj18 > l
-	} else {
-		yyb18 = z.DecCheckBreak()
-	}
+	yyb18 = !z.DecContainerNext(yyj18, l, yyhl18)
 	if yyb18 {
 		z.DecReadArrayEnd()
 		return
@@ -435,11 +421,7 @@ func (x *User) codecDecodeSelfFromArray(l int, d *codec1978.Decoder) {
 		z.DecFallback(&x.CreatedAt, false)
 	}
 	yyj18++
-	if yyhl18 {
-		yyb18 = yyj18 > l
-	} else {
-		yyb18 = z.DecCheckBreak()
-	}
+	yyb18 = !z.DecContainerNext(yyj18, l, yyhl18)
 	if yyb18 {
 		z.DecReadArrayEnd()
 		return
@@ -457,11 +439,7 @@ func (x *User) codecDecodeSelfFromArray(l int, d *codec1978.Decoder) {
 		z.DecFallback(&x.UpdatedAt, false)
 	}
 	yyj18++
-	if yyhl18 {
-		yyb18 = yyj18 > l
-	} else {
-		yyb18 = z.DecCheckBreak()
-	}
+	yyb18 = !z.DecContainerNext(yyj18, l, yyhl18)
 	if yyb18 {
 		z.DecReadArrayEnd()
 		return
@@ -475,11 +453,7 @@ func (x *User) codecDecodeSelfFromArray(l int, d *codec1978.Decoder) {
 		z.F.DecSliceUint8N(([]uint8)(x.ID[:]), d)
 	}
 	yyj18++
-	if yyhl18 {
-		yyb18 = yyj18 > l
-	} else {
-		yyb18 = z.DecCheckBreak()
-	}
+	yyb18 = !z.DecContainerNext(yyj18, l, yyhl18)
 	if yyb18 {
 		z.DecReadArrayEnd()
 		return
@@ -487,11 +461,7 @@ func (x *User) codecDecodeSelfFromArray(l int, d *codec1978.Decoder) {
 	z.DecReadArrayElem()
 	h.decArray20uint8((*[20]uint8)(&x.Address), d)
 	yyj18++
-	if yyhl18 {
-		yyb18 = yyj18 > l
-	} else {
-		yyb18 = z.DecCheckBreak()
-	}
+	yyb18 = !z.DecContainerNext(yyj18, l, yyhl18)
 	if yyb18 {
 		z.DecReadArrayEnd()
 		return
@@ -499,11 +469,7 @@ func (x *User) codecDecodeSelfFromArray(l int, d *codec1978.Decoder) {
 	z.DecReadArrayElem()
 	x.Email = (string)(z.DecStringZC(r.DecodeStringAsBytes()))
 	yyj18++
-	if yyhl18 {
-		yyb18 = yyj18 > l
-	} else {
-		yyb18 = z.DecCheckBreak()
-	}
+	yyb18 = !z.DecContainerNext(yyj18, l, yyhl18)
 	if yyb18 {
 		z.DecReadArrayEnd()
 		return
@@ -511,11 +477,7 @@ func (x *User) codecDecodeSelfFromArray(l int, d *codec1978.Decoder) {
 	z.DecReadArrayElem()
 	x.EmailVerified = (bool)(r.DecodeBool())
 	yyj18++
-	if yyhl18 {
-		yyb18 = yyj18 > l
-	} else {
-		yyb18 = z.DecCheckBreak()
-	}
+	yyb18 = !z.DecContainerNext(yyj18, l, yyhl18)
 	if yyb18 {
 		z.DecReadArrayEnd()
 		return
@@ -523,11 +485,7 @@ func (x *User) codecDecodeSelfFromArray(l int, d *codec1978.Decoder) {
 	z.DecReadArrayElem()
 	h.decArray32uint8((*[32]uint8)(&x.EmailVerificationToken), d)
 	yyj18++
-	if yyhl18 {
-		yyb18 = yyj18 > l
-	} else {
-		yyb18 = z.DecCheckBreak()
-	}
+	yyb18 = !z.DecContainerNext(yyj18, l, yyhl18)
 	if yyb18 {
 		z.DecReadArrayEnd()
 		return
@@ -544,16 +502,8 @@ func (x *User) codecDecodeSelfFromArray(l int, d *codec1978.Decoder) {
 	} else {
 		z.DecFallback(&x.EmailVerificationLast, false)
 	}
-	for {
-		yyj18++
-		if yyhl18 {
-			yyb18 = yyj18 > l
-		} else {
-			yyb18 = z.DecCheckBreak()
-		}
-		if yyb18 {
-			break
-		}
+	yyj18++
+	for ; z.DecContainerNext(yyj18, l, yyhl18); yyj18++ {
 		z.DecReadArrayElem()
 		z.DecStructFieldNotFound(yyj18-1, "")
 	}
@@ -845,16 +795,7 @@ func (x *Feed) codecDecodeSelfFromMap(l int, d *codec1978.Decoder) {
 	z, r := codec1978.GenHelper().Decoder(d)
 	_, _, _ = h, z, r
 	var yyhl3 bool = l >= 0
-	for yyj3 := 0; ; yyj3++ {
-		if yyhl3 {
-			if yyj3 >= l {
-				break
-			}
-		} else {
-			if z.DecCheckBreak() {
-				break
-			}
-		}
+	for yyj3 := 0; z.DecContainerNext(yyj3, l, yyhl3); yyj3++ {
 		z.DecReadMapElemKey()
 		yys3 := r.DecodeStringAsBytes()
 		z.DecReadMapElemValue()
@@ -934,12 +875,7 @@ func (x *Feed) codecDecodeSelfFromArray(l int, d *codec1978.Decoder) {
 	var yyj18 int
 	var yyb18 bool
 	var yyhl18 bool = l >= 0
-	yyj18++
-	if yyhl18 {
-		yyb18 = yyj18 > l
-	} else {
-		yyb18 = z.DecCheckBreak()
-	}
+	yyb18 = !z.DecContainerNext(yyj18, l, yyhl18)
 	if yyb18 {
 		z.DecReadArrayEnd()
 		return
@@ -957,11 +893,7 @@ func (x *Feed) codecDecodeSelfFromArray(l int, d *codec1978.Decoder) {
 		z.DecFallback(&x.CreatedAt, false)
 	}
 	yyj18++
-	if yyhl18 {
-		yyb18 = yyj18 > l
-	} else {
-		yyb18 = z.DecCheckBreak()
-	}
+	yyb18 = !z.DecContainerNext(yyj18, l, yyhl18)
 	if yyb18 {
 		z.DecReadArrayEnd()
 		return
@@ -979,11 +911,7 @@ func (x *Feed) codecDecodeSelfFromArray(l int, d *codec1978.Decoder) {
 		z.DecFallback(&x.UpdatedAt, false)
 	}
 	yyj18++
-	if yyhl18 {
-		yyb18 = yyj18 > l
-	} else {
-		yyb18 = z.DecCheckBreak()
-	}
+	yyb18 = !z.DecContainerNext(yyj18, l, yyhl18)
 	if yyb18 {
 		z.DecReadArrayEnd()
 		return
@@ -997,11 +925,7 @@ func (x *Feed) codecDecodeSelfFromArray(l int, d *codec1978.Decoder) {
 		z.F.DecSliceUint8N(([]uint8)(x.ID[:]), d)
 	}
 	yyj18++
-	if yyhl18 {
-		yyb18 = yyj18 > l
-	} else {
-		yyb18 = z.DecCheckBreak()
-	}
+	yyb18 = !z.DecContainerNext(yyj18, l, yyhl18)
 	if yyb18 {
 		z.DecReadArrayEnd()
 		return
@@ -1015,11 +939,7 @@ func (x *Feed) codecDecodeSelfFromArray(l int, d *codec1978.Decoder) {
 		z.F.DecSliceUint8N(([]uint8)(x.Owner[:]), d)
 	}
 	yyj18++
-	if yyhl18 {
-		yyb18 = yyj18 > l
-	} else {
-		yyb18 = z.DecCheckBreak()
-	}
+	yyb18 = !z.DecContainerNext(yyj18, l, yyhl18)
 	if yyb18 {
 		z.DecReadArrayEnd()
 		return
@@ -1027,11 +947,7 @@ func (x *Feed) codecDecodeSelfFromArray(l int, d *codec1978.Decoder) {
 	z.DecReadArrayElem()
 	x.Name = (string)(z.DecStringZC(r.DecodeStringAsBytes()))
 	yyj18++
-	if yyhl18 {
-		yyb18 = yyj18 > l
-	} else {
-		yyb18 = z.DecCheckBreak()
-	}
+	yyb18 = !z.DecContainerNext(yyj18, l, yyhl18)
 	if yyb18 {
 		z.DecReadArrayEnd()
 		return
@@ -1039,11 +955,7 @@ func (x *Feed) codecDecodeSelfFromArray(l int, d *codec1978.Decoder) {
 	z.DecReadArrayElem()
 	x.URL = (string)(z.DecStringZC(r.DecodeStringAsBytes()))
 	yyj18++
-	if yyhl18 {
-		yyb18 = yyj18 > l
-	} else {
-		yyb18 = z.DecCheckBreak()
-	}
+	yyb18 = !z.DecContainerNext(yyj18, l, yyhl18)
 	if yyb18 {
 		z.DecReadArrayEnd()
 		return
@@ -1055,11 +967,7 @@ func (x *Feed) codecDecodeSelfFromArray(l int, d *codec1978.Decoder) {
 		x.Frequency = (time.Duration)(r.DecodeInt64())
 	}
 	yyj18++
-	if yyhl18 {
-		yyb18 = yyj18 > l
-	} else {
-		yyb18 = z.DecCheckBreak()
-	}
+	yyb18 = !z.DecContainerNext(yyj18, l, yyhl18)
 	if yyb18 {
 		z.DecReadArrayEnd()
 		return
@@ -1076,16 +984,8 @@ func (x *Feed) codecDecodeSelfFromArray(l int, d *codec1978.Decoder) {
 	} else {
 		z.DecFallback(&x.LastFetched, false)
 	}
-	for {
-		yyj18++
-		if yyhl18 {
-			yyb18 = yyj18 > l
-		} else {
-			yyb18 = z.DecCheckBreak()
-		}
-		if yyb18 {
-			break
-		}
+	yyj18++
+	for ; z.DecContainerNext(yyj18, l, yyhl18); yyj18++ {
 		z.DecReadArrayElem()
 		z.DecStructFieldNotFound(yyj18-1, "")
 	}
@@ -1265,16 +1165,7 @@ func (x *SeenItem) codecDecodeSelfFromMap(l int, d *codec1978.Decoder) {
 	z, r := codec1978.GenHelper().Decoder(d)
 	_, _, _ = h, z, r
 	var yyhl3 bool = l >= 0
-	for yyj3 := 0; ; yyj3++ {
-		if yyhl3 {
-			if yyj3 >= l {
-				break
-			}
-		} else {
-			if z.DecCheckBreak() {
-				break
-			}
-		}
+	for yyj3 := 0; z.DecContainerNext(yyj3, l, yyhl3); yyj3++ {
 		z.DecReadMapElemKey()
 		yys3 := r.DecodeStringAsBytes()
 		z.DecReadMapElemValue()
@@ -1322,12 +1213,7 @@ func (x *SeenItem) codecDecodeSelfFromArray(l int, d *codec1978.Decoder) {
 	var yyj11 int
 	var yyb11 bool
 	var yyhl11 bool = l >= 0
-	yyj11++
-	if yyhl11 {
-		yyb11 = yyj11 > l
-	} else {
-		yyb11 = z.DecCheckBreak()
-	}
+	yyb11 = !z.DecContainerNext(yyj11, l, yyhl11)
 	if yyb11 {
 		z.DecReadArrayEnd()
 		return
@@ -1341,11 +1227,7 @@ func (x *SeenItem) codecDecodeSelfFromArray(l int, d *codec1978.Decoder) {
 		z.F.DecSliceUint8N(([]uint8)(x.ID[:]), d)
 	}
 	yyj11++
-	if yyhl11 {
-		yyb11 = yyj11 > l
-	} else {
-		yyb11 = z.DecCheckBreak()
-	}
+	yyb11 = !z.DecContainerNext(yyj11, l, yyhl11)
 	if yyb11 {
 		z.DecReadArrayEnd()
 		return
@@ -1359,11 +1241,7 @@ func (x *SeenItem) codecDecodeSelfFromArray(l int, d *codec1978.Decoder) {
 		z.F.DecSliceUint8N(([]uint8)(x.FeedID[:]), d)
 	}
 	yyj11++
-	if yyhl11 {
-		yyb11 = yyj11 > l
-	} else {
-		yyb11 = z.DecCheckBreak()
-	}
+	yyb11 = !z.DecContainerNext(yyj11, l, yyhl11)
 	if yyb11 {
 		z.DecReadArrayEnd()
 		return
@@ -1371,11 +1249,7 @@ func (x *SeenItem) codecDecodeSelfFromArray(l int, d *codec1978.Decoder) {
 	z.DecReadArrayElem()
 	x.GUID = (string)(z.DecStringZC(r.DecodeStringAsBytes()))
 	yyj11++
-	if yyhl11 {
-		yyb11 = yyj11 > l
-	} else {
-		yyb11 = z.DecCheckBreak()
-	}
+	yyb11 = !z.DecContainerNext(yyj11, l, yyhl11)
 	if yyb11 {
 		z.DecReadArrayEnd()
 		return
@@ -1392,16 +1266,8 @@ func (x *SeenItem) codecDecodeSelfFromArray(l int, d *codec1978.Decoder) {
 	} else {
 		z.DecFallback(&x.Timestamp, false)
 	}
-	for {
-		yyj11++
-		if yyhl11 {
-			yyb11 = yyj11 > l
-		} else {
-			yyb11 = z.DecCheckBreak()
-		}
-		if yyb11 {
-			break
-		}
+	yyj11++
+	for ; z.DecContainerNext(yyj11, l, yyhl11); yyj11++ {
 		z.DecReadArrayElem()
 		z.DecStructFieldNotFound(yyj11-1, "")
 	}
@@ -1529,16 +1395,7 @@ func (x *ErrorMessage) codecDecodeSelfFromMap(l int, d *codec1978.Decoder) {
 	z, r := codec1978.GenHelper().Decoder(d)
 	_, _, _ = h, z, r
 	var yyhl3 bool = l >= 0
-	for yyj3 := 0; ; yyj3++ {
-		if yyhl3 {
-			if yyj3 >= l {
-				break
-			}
-		} else {
-			if z.DecCheckBreak() {
-				break
-			}
-		}
+	for yyj3 := 0; z.DecContainerNext(yyj3, l, yyhl3); yyj3++ {
 		z.DecReadMapElemKey()
 		yys3 := r.DecodeStringAsBytes()
 		z.DecReadMapElemValue()
@@ -1564,12 +1421,7 @@ func (x *ErrorMessage) codecDecodeSelfFromArray(l int, d *codec1978.Decoder) {
 	var yyj7 int
 	var yyb7 bool
 	var yyhl7 bool = l >= 0
-	yyj7++
-	if yyhl7 {
-		yyb7 = yyj7 > l
-	} else {
-		yyb7 = z.DecCheckBreak()
-	}
+	yyb7 = !z.DecContainerNext(yyj7, l, yyhl7)
 	if yyb7 {
 		z.DecReadArrayEnd()
 		return
@@ -1581,27 +1433,15 @@ func (x *ErrorMessage) codecDecodeSelfFromArray(l int, d *codec1978.Decoder) {
 		x.Code = (ErrorCode)(r.DecodeUint64())
 	}
 	yyj7++
-	if yyhl7 {
-		yyb7 = yyj7 > l
-	} else {
-		yyb7 = z.DecCheckBreak()
-	}
+	yyb7 = !z.DecContainerNext(yyj7, l, yyhl7)
 	if yyb7 {
 		z.DecReadArrayEnd()
 		return
 	}
 	z.DecReadArrayElem()
 	x.Message = (string)(z.DecStringZC(r.DecodeStringAsBytes()))
-	for {
-		yyj7++
-		if yyhl7 {
-			yyb7 = yyj7 > l
-		} else {
-			yyb7 = z.DecCheckBreak()
-		}
-		if yyb7 {
-			break
-		}
+	yyj7++
+	for ; z.DecContainerNext(yyj7, l, yyhl7); yyj7++ {
 		z.DecReadArrayElem()
 		z.DecStructFieldNotFound(yyj7-1, "")
 	}
@@ -1692,16 +1532,7 @@ func (x *InitializationRequest) codecDecodeSelfFromMap(l int, d *codec1978.Decod
 	z, r := codec1978.GenHelper().Decoder(d)
 	_, _, _ = h, z, r
 	var yyhl3 bool = l >= 0
-	for yyj3 := 0; ; yyj3++ {
-		if yyhl3 {
-			if yyj3 >= l {
-				break
-			}
-		} else {
-			if z.DecCheckBreak() {
-				break
-			}
-		}
+	for yyj3 := 0; z.DecContainerNext(yyj3, l, yyhl3); yyj3++ {
 		z.DecReadMapElemKey()
 		yys3 := r.DecodeStringAsBytes()
 		z.DecReadMapElemValue()
@@ -1723,12 +1554,7 @@ func (x *InitializationRequest) codecDecodeSelfFromArray(l int, d *codec1978.Dec
 	var yyj7 int
 	var yyb7 bool
 	var yyhl7 bool = l >= 0
-	yyj7++
-	if yyhl7 {
-		yyb7 = yyj7 > l
-	} else {
-		yyb7 = z.DecCheckBreak()
-	}
+	yyb7 = !z.DecContainerNext(yyj7, l, yyhl7)
 	if yyb7 {
 		z.DecReadArrayEnd()
 		return
@@ -1736,27 +1562,15 @@ func (x *InitializationRequest) codecDecodeSelfFromArray(l int, d *codec1978.Dec
 	z.DecReadArrayElem()
 	h.decArray20uint8((*[20]uint8)(&x.Address), d)
 	yyj7++
-	if yyhl7 {
-		yyb7 = yyj7 > l
-	} else {
-		yyb7 = z.DecCheckBreak()
-	}
+	yyb7 = !z.DecContainerNext(yyj7, l, yyhl7)
 	if yyb7 {
 		z.DecReadArrayEnd()
 		return
 	}
 	z.DecReadArrayElem()
 	x.Locale = (string)(z.DecStringZC(r.DecodeStringAsBytes()))
-	for {
-		yyj7++
-		if yyhl7 {
-			yyb7 = yyj7 > l
-		} else {
-			yyb7 = z.DecCheckBreak()
-		}
-		if yyb7 {
-			break
-		}
+	yyj7++
+	for ; z.DecContainerNext(yyj7, l, yyhl7); yyj7++ {
 		z.DecReadArrayElem()
 		z.DecStructFieldNotFound(yyj7-1, "")
 	}
@@ -1856,16 +1670,7 @@ func (x *InitializationResponse) codecDecodeSelfFromMap(l int, d *codec1978.Deco
 	z, r := codec1978.GenHelper().Decoder(d)
 	_, _, _ = h, z, r
 	var yyhl3 bool = l >= 0
-	for yyj3 := 0; ; yyj3++ {
-		if yyhl3 {
-			if yyj3 >= l {
-				break
-			}
-		} else {
-			if z.DecCheckBreak() {
-				break
-			}
-		}
+	for yyj3 := 0; z.DecContainerNext(yyj3, l, yyhl3); yyj3++ {
 		z.DecReadMapElemKey()
 		yys3 := r.DecodeStringAsBytes()
 		z.DecReadMapElemValue()
@@ -1887,12 +1692,7 @@ func (x *InitializationResponse) codecDecodeSelfFromArray(l int, d *codec1978.De
 	var yyj7 int
 	var yyb7 bool
 	var yyhl7 bool = l >= 0
-	yyj7++
-	if yyhl7 {
-		yyb7 = yyj7 > l
-	} else {
-		yyb7 = z.DecCheckBreak()
-	}
+	yyb7 = !z.DecContainerNext(yyj7, l, yyhl7)
 	if yyb7 {
 		z.DecReadArrayEnd()
 		return
@@ -1900,27 +1700,15 @@ func (x *InitializationResponse) codecDecodeSelfFromArray(l int, d *codec1978.De
 	z.DecReadArrayElem()
 	x.UserFound = (bool)(r.DecodeBool())
 	yyj7++
-	if yyhl7 {
-		yyb7 = yyj7 > l
-	} else {
-		yyb7 = z.DecCheckBreak()
-	}
+	yyb7 = !z.DecContainerNext(yyj7, l, yyhl7)
 	if yyb7 {
 		z.DecReadArrayEnd()
 		return
 	}
 	z.DecReadArrayElem()
 	x.Challenge = z.DecodeBytesInto(([]byte)(x.Challenge))
-	for {
-		yyj7++
-		if yyhl7 {
-			yyb7 = yyj7 > l
-		} else {
-			yyb7 = z.DecCheckBreak()
-		}
-		if yyb7 {
-			break
-		}
+	yyj7++
+	for ; z.DecContainerNext(yyj7, l, yyhl7); yyj7++ {
 		z.DecReadArrayElem()
 		z.DecStructFieldNotFound(yyj7-1, "")
 	}
@@ -2011,16 +1799,7 @@ func (x *NewUserInitialization) codecDecodeSelfFromMap(l int, d *codec1978.Decod
 	z, r := codec1978.GenHelper().Decoder(d)
 	_, _, _ = h, z, r
 	var yyhl3 bool = l >= 0
-	for yyj3 := 0; ; yyj3++ {
-		if yyhl3 {
-			if yyj3 >= l {
-				break
-			}
-		} else {
-			if z.DecCheckBreak() {
-				break
-			}
-		}
+	for yyj3 := 0; z.DecContainerNext(yyj3, l, yyhl3); yyj3++ {
 		z.DecReadMapElemKey()
 		yys3 := r.DecodeStringAsBytes()
 		z.DecReadMapElemValue()
@@ -2042,12 +1821,7 @@ func (x *NewUserInitialization) codecDecodeSelfFromArray(l int, d *codec1978.Dec
 	var yyj7 int
 	var yyb7 bool
 	var yyhl7 bool = l >= 0
-	yyj7++
-	if yyhl7 {
-		yyb7 = yyj7 > l
-	} else {
-		yyb7 = z.DecCheckBreak()
-	}
+	yyb7 = !z.DecContainerNext(yyj7, l, yyhl7)
 	if yyb7 {
 		z.DecReadArrayEnd()
 		return
@@ -2055,27 +1829,15 @@ func (x *NewUserInitialization) codecDecodeSelfFromArray(l int, d *codec1978.Dec
 	z.DecReadArrayElem()
 	x.Email = (string)(z.DecStringZC(r.DecodeStringAsBytes()))
 	yyj7++
-	if yyhl7 {
-		yyb7 = yyj7 > l
-	} else {
-		yyb7 = z.DecCheckBreak()
-	}
+	yyb7 = !z.DecContainerNext(yyj7, l, yyhl7)
 	if yyb7 {
 		z.DecReadArrayEnd()
 		return
 	}
 	z.DecReadArrayElem()
 	h.decArray65uint8((*[65]uint8)(&x.Signature), d)
-	for {
-		yyj7++
-		if yyhl7 {
-			yyb7 = yyj7 > l
-		} else {
-			yyb7 = z.DecCheckBreak()
-		}
-		if yyb7 {
-			break
-		}
+	yyj7++
+	for ; z.DecContainerNext(yyj7, l, yyhl7); yyj7++ {
 		z.DecReadArrayElem()
 		z.DecStructFieldNotFound(yyj7-1, "")
 	}
@@ -2156,16 +1918,7 @@ func (x *OrdinaryInitialization) codecDecodeSelfFromMap(l int, d *codec1978.Deco
 	z, r := codec1978.GenHelper().Decoder(d)
 	_, _, _ = h, z, r
 	var yyhl3 bool = l >= 0
-	for yyj3 := 0; ; yyj3++ {
-		if yyhl3 {
-			if yyj3 >= l {
-				break
-			}
-		} else {
-			if z.DecCheckBreak() {
-				break
-			}
-		}
+	for yyj3 := 0; z.DecContainerNext(yyj3, l, yyhl3); yyj3++ {
 		z.DecReadMapElemKey()
 		yys3 := r.DecodeStringAsBytes()
 		z.DecReadMapElemValue()
@@ -2185,28 +1938,15 @@ func (x *OrdinaryInitialization) codecDecodeSelfFromArray(l int, d *codec1978.De
 	var yyj6 int
 	var yyb6 bool
 	var yyhl6 bool = l >= 0
-	yyj6++
-	if yyhl6 {
-		yyb6 = yyj6 > l
-	} else {
-		yyb6 = z.DecCheckBreak()
-	}
+	yyb6 = !z.DecContainerNext(yyj6, l, yyhl6)
 	if yyb6 {
 		z.DecReadArrayEnd()
 		return
 	}
 	z.DecReadArrayElem()
 	h.decArray65uint8((*[65]uint8)(&x.Signature), d)
-	for {
-		yyj6++
-		if yyhl6 {
-			yyb6 = yyj6 > l
-		} else {
-			yyb6 = z.DecCheckBreak()
-		}
-		if yyb6 {
-			break
-		}
+	yyj6++
+	for ; z.DecContainerNext(yyj6, l, yyhl6); yyj6++ {
 		z.DecReadArrayElem()
 		z.DecStructFieldNotFound(yyj6-1, "")
 	}
@@ -2319,16 +2059,7 @@ func (x *Welcome) codecDecodeSelfFromMap(l int, d *codec1978.Decoder) {
 	z, r := codec1978.GenHelper().Decoder(d)
 	_, _, _ = h, z, r
 	var yyhl3 bool = l >= 0
-	for yyj3 := 0; ; yyj3++ {
-		if yyhl3 {
-			if yyj3 >= l {
-				break
-			}
-		} else {
-			if z.DecCheckBreak() {
-				break
-			}
-		}
+	for yyj3 := 0; z.DecContainerNext(yyj3, l, yyhl3); yyj3++ {
 		z.DecReadMapElemKey()
 		yys3 := r.DecodeStringAsBytes()
 		z.DecReadMapElemValue()
@@ -2356,12 +2087,7 @@ func (x *Welcome) codecDecodeSelfFromArray(l int, d *codec1978.Decoder) {
 	var yyj8 int
 	var yyb8 bool
 	var yyhl8 bool = l >= 0
-	yyj8++
-	if yyhl8 {
-		yyb8 = yyj8 > l
-	} else {
-		yyb8 = z.DecCheckBreak()
-	}
+	yyb8 = !z.DecContainerNext(yyj8, l, yyhl8)
 	if yyb8 {
 		z.DecReadArrayEnd()
 		return
@@ -2369,11 +2095,7 @@ func (x *Welcome) codecDecodeSelfFromArray(l int, d *codec1978.Decoder) {
 	z.DecReadArrayElem()
 	x.LoggedIn = (bool)(r.DecodeBool())
 	yyj8++
-	if yyhl8 {
-		yyb8 = yyj8 > l
-	} else {
-		yyb8 = z.DecCheckBreak()
-	}
+	yyb8 = !z.DecContainerNext(yyj8, l, yyhl8)
 	if yyb8 {
 		z.DecReadArrayEnd()
 		return
@@ -2381,11 +2103,7 @@ func (x *Welcome) codecDecodeSelfFromArray(l int, d *codec1978.Decoder) {
 	z.DecReadArrayElem()
 	x.Message = (string)(z.DecStringZC(r.DecodeStringAsBytes()))
 	yyj8++
-	if yyhl8 {
-		yyb8 = yyj8 > l
-	} else {
-		yyb8 = z.DecCheckBreak()
-	}
+	yyb8 = !z.DecContainerNext(yyj8, l, yyhl8)
 	if yyb8 {
 		z.DecReadArrayEnd()
 		return
@@ -2396,16 +2114,8 @@ func (x *Welcome) codecDecodeSelfFromArray(l int, d *codec1978.Decoder) {
 	} else {
 		x.User.CodecDecodeSelf(d)
 	}
-	for {
-		yyj8++
-		if yyhl8 {
-			yyb8 = yyj8 > l
-		} else {
-			yyb8 = z.DecCheckBreak()
-		}
-		if yyb8 {
-			break
-		}
+	yyj8++
+	for ; z.DecContainerNext(yyj8, l, yyhl8); yyj8++ {
 		z.DecReadArrayElem()
 		z.DecStructFieldNotFound(yyj8-1, "")
 	}
@@ -2483,16 +2193,7 @@ func (x *ListFeedsRequest) codecDecodeSelfFromMap(l int, d *codec1978.Decoder) {
 	z, r := codec1978.GenHelper().Decoder(d)
 	_, _, _ = h, z, r
 	var yyhl3 bool = l >= 0
-	for yyj3 := 0; ; yyj3++ {
-		if yyhl3 {
-			if yyj3 >= l {
-				break
-			}
-		} else {
-			if z.DecCheckBreak() {
-				break
-			}
-		}
+	for yyj3 := 0; z.DecContainerNext(yyj3, l, yyhl3); yyj3++ {
 		z.DecReadMapElemKey()
 		yys3 := r.DecodeStringAsBytes()
 		z.DecReadMapElemValue()
@@ -2512,28 +2213,15 @@ func (x *ListFeedsRequest) codecDecodeSelfFromArray(l int, d *codec1978.Decoder)
 	var yyj5 int
 	var yyb5 bool
 	var yyhl5 bool = l >= 0
-	yyj5++
-	if yyhl5 {
-		yyb5 = yyj5 > l
-	} else {
-		yyb5 = z.DecCheckBreak()
-	}
+	yyb5 = !z.DecContainerNext(yyj5, l, yyhl5)
 	if yyb5 {
 		z.DecReadArrayEnd()
 		return
 	}
 	z.DecReadArrayElem()
 	x.Sort = (uint8)(z.C.UintV(r.DecodeUint64(), 8))
-	for {
-		yyj5++
-		if yyhl5 {
-			yyb5 = yyj5 > l
-		} else {
-			yyb5 = z.DecCheckBreak()
-		}
-		if yyb5 {
-			break
-		}
+	yyj5++
+	for ; z.DecContainerNext(yyj5, l, yyhl5); yyj5++ {
 		z.DecReadArrayElem()
 		z.DecStructFieldNotFound(yyj5-1, "")
 	}
@@ -2633,16 +2321,7 @@ func (x *ListFeedsResponse) codecDecodeSelfFromMap(l int, d *codec1978.Decoder) 
 	z, r := codec1978.GenHelper().Decoder(d)
 	_, _, _ = h, z, r
 	var yyhl3 bool = l >= 0
-	for yyj3 := 0; ; yyj3++ {
-		if yyhl3 {
-			if yyj3 >= l {
-				break
-			}
-		} else {
-			if z.DecCheckBreak() {
-				break
-			}
-		}
+	for yyj3 := 0; z.DecContainerNext(yyj3, l, yyhl3); yyj3++ {
 		z.DecReadMapElemKey()
 		yys3 := r.DecodeStringAsBytes()
 		z.DecReadMapElemValue()
@@ -2664,12 +2343,7 @@ func (x *ListFeedsResponse) codecDecodeSelfFromArray(l int, d *codec1978.Decoder
 	var yyj7 int
 	var yyb7 bool
 	var yyhl7 bool = l >= 0
-	yyj7++
-	if yyhl7 {
-		yyb7 = yyj7 > l
-	} else {
-		yyb7 = z.DecCheckBreak()
-	}
+	yyb7 = !z.DecContainerNext(yyj7, l, yyhl7)
 	if yyb7 {
 		z.DecReadArrayEnd()
 		return
@@ -2677,27 +2351,15 @@ func (x *ListFeedsResponse) codecDecodeSelfFromArray(l int, d *codec1978.Decoder
 	z.DecReadArrayElem()
 	x.Count = (uint64)(r.DecodeUint64())
 	yyj7++
-	if yyhl7 {
-		yyb7 = yyj7 > l
-	} else {
-		yyb7 = z.DecCheckBreak()
-	}
+	yyb7 = !z.DecContainerNext(yyj7, l, yyhl7)
 	if yyb7 {
 		z.DecReadArrayEnd()
 		return
 	}
 	z.DecReadArrayElem()
 	h.decSliceFeed((*[]Feed)(&x.Feeds), d)
-	for {
-		yyj7++
-		if yyhl7 {
-			yyb7 = yyj7 > l
-		} else {
-			yyb7 = z.DecCheckBreak()
-		}
-		if yyb7 {
-			break
-		}
+	yyj7++
+	for ; z.DecContainerNext(yyj7, l, yyhl7); yyj7++ {
 		z.DecReadArrayElem()
 		z.DecStructFieldNotFound(yyj7-1, "")
 	}
@@ -2796,16 +2458,7 @@ func (x *DeleteFeedRequest) codecDecodeSelfFromMap(l int, d *codec1978.Decoder) 
 	z, r := codec1978.GenHelper().Decoder(d)
 	_, _, _ = h, z, r
 	var yyhl3 bool = l >= 0
-	for yyj3 := 0; ; yyj3++ {
-		if yyhl3 {
-			if yyj3 >= l {
-				break
-			}
-		} else {
-			if z.DecCheckBreak() {
-				break
-			}
-		}
+	for yyj3 := 0; z.DecContainerNext(yyj3, l, yyhl3); yyj3++ {
 		z.DecReadMapElemKey()
 		yys3 := r.DecodeStringAsBytes()
 		z.DecReadMapElemValue()
@@ -2831,12 +2484,7 @@ func (x *DeleteFeedRequest) codecDecodeSelfFromArray(l int, d *codec1978.Decoder
 	var yyj6 int
 	var yyb6 bool
 	var yyhl6 bool = l >= 0
-	yyj6++
-	if yyhl6 {
-		yyb6 = yyj6 > l
-	} else {
-		yyb6 = z.DecCheckBreak()
-	}
+	yyb6 = !z.DecContainerNext(yyj6, l, yyhl6)
 	if yyb6 {
 		z.DecReadArrayEnd()
 		return
@@ -2849,16 +2497,8 @@ func (x *DeleteFeedRequest) codecDecodeSelfFromArray(l int, d *codec1978.Decoder
 	} else {
 		z.F.DecSliceUint8N(([]uint8)(x.ID[:]), d)
 	}
-	for {
-		yyj6++
-		if yyhl6 {
-			yyb6 = yyj6 > l
-		} else {
-			yyb6 = z.DecCheckBreak()
-		}
-		if yyb6 {
-			break
-		}
+	yyj6++
+	for ; z.DecContainerNext(yyj6, l, yyhl6); yyj6++ {
 		z.DecReadArrayElem()
 		z.DecStructFieldNotFound(yyj6-1, "")
 	}
@@ -2936,16 +2576,7 @@ func (x *DeleteFeedResponse) codecDecodeSelfFromMap(l int, d *codec1978.Decoder)
 	z, r := codec1978.GenHelper().Decoder(d)
 	_, _, _ = h, z, r
 	var yyhl3 bool = l >= 0
-	for yyj3 := 0; ; yyj3++ {
-		if yyhl3 {
-			if yyj3 >= l {
-				break
-			}
-		} else {
-			if z.DecCheckBreak() {
-				break
-			}
-		}
+	for yyj3 := 0; z.DecContainerNext(yyj3, l, yyhl3); yyj3++ {
 		z.DecReadMapElemKey()
 		yys3 := r.DecodeStringAsBytes()
 		z.DecReadMapElemValue()
@@ -2965,28 +2596,15 @@ func (x *DeleteFeedResponse) codecDecodeSelfFromArray(l int, d *codec1978.Decode
 	var yyj5 int
 	var yyb5 bool
 	var yyhl5 bool = l >= 0
-	yyj5++
-	if yyhl5 {
-		yyb5 = yyj5 > l
-	} else {
-		yyb5 = z.DecCheckBreak()
-	}
+	yyb5 = !z.DecContainerNext(yyj5, l, yyhl5)
 	if yyb5 {
 		z.DecReadArrayEnd()
 		return
 	}
 	z.DecReadArrayElem()
 	x.DeletedCount = (int64)(r.DecodeInt64())
-	for {
-		yyj5++
-		if yyhl5 {
-			yyb5 = yyj5 > l
-		} else {
-			yyb5 = z.DecCheckBreak()
-		}
-		if yyb5 {
-			break
-		}
+	yyj5++
+	for ; z.DecContainerNext(yyj5, l, yyhl5); yyj5++ {
 		z.DecReadArrayElem()
 		z.DecStructFieldNotFound(yyj5-1, "")
 	}
@@ -3095,16 +2713,7 @@ func (x *GenericIDResponse) codecDecodeSelfFromMap(l int, d *codec1978.Decoder) 
 	z, r := codec1978.GenHelper().Decoder(d)
 	_, _, _ = h, z, r
 	var yyhl3 bool = l >= 0
-	for yyj3 := 0; ; yyj3++ {
-		if yyhl3 {
-			if yyj3 >= l {
-				break
-			}
-		} else {
-			if z.DecCheckBreak() {
-				break
-			}
-		}
+	for yyj3 := 0; z.DecContainerNext(yyj3, l, yyhl3); yyj3++ {
 		z.DecReadMapElemKey()
 		yys3 := r.DecodeStringAsBytes()
 		z.DecReadMapElemValue()
@@ -3132,12 +2741,7 @@ func (x *GenericIDResponse) codecDecodeSelfFromArray(l int, d *codec1978.Decoder
 	var yyj7 int
 	var yyb7 bool
 	var yyhl7 bool = l >= 0
-	yyj7++
-	if yyhl7 {
-		yyb7 = yyj7 > l
-	} else {
-		yyb7 = z.DecCheckBreak()
-	}
+	yyb7 = !z.DecContainerNext(yyj7, l, yyhl7)
 	if yyb7 {
 		z.DecReadArrayEnd()
 		return
@@ -3145,11 +2749,7 @@ func (x *GenericIDResponse) codecDecodeSelfFromArray(l int, d *codec1978.Decoder
 	z.DecReadArrayElem()
 	x.OK = (bool)(r.DecodeBool())
 	yyj7++
-	if yyhl7 {
-		yyb7 = yyj7 > l
-	} else {
-		yyb7 = z.DecCheckBreak()
-	}
+	yyb7 = !z.DecContainerNext(yyj7, l, yyhl7)
 	if yyb7 {
 		z.DecReadArrayEnd()
 		return
@@ -3162,16 +2762,8 @@ func (x *GenericIDResponse) codecDecodeSelfFromArray(l int, d *codec1978.Decoder
 	} else {
 		z.F.DecSliceUint8N(([]uint8)(x.ID[:]), d)
 	}
-	for {
-		yyj7++
-		if yyhl7 {
-			yyb7 = yyj7 > l
-		} else {
-			yyb7 = z.DecCheckBreak()
-		}
-		if yyb7 {
-			break
-		}
+	yyj7++
+	for ; z.DecContainerNext(yyj7, l, yyhl7); yyj7++ {
 		z.DecReadArrayElem()
 		z.DecStructFieldNotFound(yyj7-1, "")
 	}
@@ -3249,16 +2841,7 @@ func (x *UpdatedFeedResponse) codecDecodeSelfFromMap(l int, d *codec1978.Decoder
 	z, r := codec1978.GenHelper().Decoder(d)
 	_, _, _ = h, z, r
 	var yyhl3 bool = l >= 0
-	for yyj3 := 0; ; yyj3++ {
-		if yyhl3 {
-			if yyj3 >= l {
-				break
-			}
-		} else {
-			if z.DecCheckBreak() {
-				break
-			}
-		}
+	for yyj3 := 0; z.DecContainerNext(yyj3, l, yyhl3); yyj3++ {
 		z.DecReadMapElemKey()
 		yys3 := r.DecodeStringAsBytes()
 		z.DecReadMapElemValue()
@@ -3278,28 +2861,15 @@ func (x *UpdatedFeedResponse) codecDecodeSelfFromArray(l int, d *codec1978.Decod
 	var yyj5 int
 	var yyb5 bool
 	var yyhl5 bool = l >= 0
-	yyj5++
-	if yyhl5 {
-		yyb5 = yyj5 > l
-	} else {
-		yyb5 = z.DecCheckBreak()
-	}
+	yyb5 = !z.DecContainerNext(yyj5, l, yyhl5)
 	if yyb5 {
 		z.DecReadArrayEnd()
 		return
 	}
 	z.DecReadArrayElem()
 	x.ModifiedCount = (uint64)(r.DecodeUint64())
-	for {
-		yyj5++
-		if yyhl5 {
-			yyb5 = yyj5 > l
-		} else {
-			yyb5 = z.DecCheckBreak()
-		}
-		if yyb5 {
-			break
-		}
+	yyj5++
+	for ; z.DecContainerNext(yyj5, l, yyhl5); yyj5++ {
 		z.DecReadArrayElem()
 		z.DecStructFieldNotFound(yyj5-1, "")
 	}
@@ -3380,16 +2950,7 @@ func (x *VerifyEmailRequest) codecDecodeSelfFromMap(l int, d *codec1978.Decoder)
 	z, r := codec1978.GenHelper().Decoder(d)
 	_, _, _ = h, z, r
 	var yyhl3 bool = l >= 0
-	for yyj3 := 0; ; yyj3++ {
-		if yyhl3 {
-			if yyj3 >= l {
-				break
-			}
-		} else {
-			if z.DecCheckBreak() {
-				break
-			}
-		}
+	for yyj3 := 0; z.DecContainerNext(yyj3, l, yyhl3); yyj3++ {
 		z.DecReadMapElemKey()
 		yys3 := r.DecodeStringAsBytes()
 		z.DecReadMapElemValue()
@@ -3409,28 +2970,15 @@ func (x *VerifyEmailRequest) codecDecodeSelfFromArray(l int, d *codec1978.Decode
 	var yyj6 int
 	var yyb6 bool
 	var yyhl6 bool = l >= 0
-	yyj6++
-	if yyhl6 {
-		yyb6 = yyj6 > l
-	} else {
-		yyb6 = z.DecCheckBreak()
-	}
+	yyb6 = !z.DecContainerNext(yyj6, l, yyhl6)
 	if yyb6 {
 		z.DecReadArrayEnd()
 		return
 	}
 	z.DecReadArrayElem()
 	h.decArray32uint8((*[32]uint8)(&x.Token), d)
-	for {
-		yyj6++
-		if yyhl6 {
-			yyb6 = yyj6 > l
-		} else {
-			yyb6 = z.DecCheckBreak()
-		}
-		if yyb6 {
-			break
-		}
+	yyj6++
+	for ; z.DecContainerNext(yyj6, l, yyhl6); yyj6++ {
 		z.DecReadArrayElem()
 		z.DecStructFieldNotFound(yyj6-1, "")
 	}
@@ -3556,7 +3104,7 @@ func (x codecSelfer42) decSliceFeed(v *[]Feed, d *codec1978.Decoder) {
 			}
 		}
 		var yyj1 int
-		for yyj1 = 0; (yyhl1 && yyj1 < yyl1) || !(yyhl1 || z.DecCheckBreak()); yyj1++ { // bounds-check-elimination
+		for yyj1 = 0; z.DecContainerNext(yyj1, yyl1, yyhl1); yyj1++ {
 			if yyj1 == 0 && yyv1 == nil {
 				if yyhl1 {
 					yyrl1 = z.DecInferLen(yyl1, z.DecBasicHandle().MaxInitLen, 136)
