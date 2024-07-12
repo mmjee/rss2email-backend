@@ -77,7 +77,7 @@ func setEmailToAddress(msg *smtp.Email, address string) error {
 	return nil
 }
 
-func (c *connection) handleEmailRequest(mi *MessageInfo, buf []byte) {
+func (c *connection) handleEmailRequest(mi *MessageInfo, _ []byte) {
 	u := c.getUser(mi)
 	c.sendVerificationEmail(u)
 	c.writeMessage(true, mi, true)
